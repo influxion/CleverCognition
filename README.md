@@ -1,19 +1,20 @@
 # Clever Cognition | E-Commerce
 
-A modern e-commerce site built with Next.js 13 and App Router, powered by Shopify.
+Welcome to Clever Cognition, a unique e-commerce site that offers a curated collection of specialty puzzles for enthusiasts. Built with Next.js 13 and App Router, and powered by Shopify.
 
 ## Features
 
-- Next.js App Router integration
-- SEO optimization using Next.js's Metadata
-- React Server Components (RSCs) and Suspense
-- Route Handlers for mutations
-- Edge runtime support
-- New fetching and caching paradigms
-- Dynamic OG images
-- Styling with Tailwind CSS
-- Checkout and payments with Shopify
-- Automatic light/dark mode based on system settings
+- Curated selection of high-quality, unique puzzles
+- User-friendly navigation with Next.js App Router integration
+- Optimized SEO using Next.js Metadata
+- Smooth and responsive UI with React Server Components (RSCs) and Suspense
+- Secure and efficient Route Handlers for mutations
+- Fast load times and improved performance with Edge runtime support
+- Adaptive fetching and caching mechanisms for an optimal browsing experience
+- Engaging dynamic Open Graph images for social sharing
+- Clean, modern design with Tailwind CSS
+- Seamless checkout and payment experience through Shopify integration
+- Automatic light and dark mode adaptation based on user's system settings
 
 ## Installation and Setup
 

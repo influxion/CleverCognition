@@ -9,7 +9,6 @@ const { SITE_NAME } = process.env;
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
-  const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
   const menu = await getMenu('next-js-frontend-footer-menu');
 
   return (
@@ -41,14 +40,14 @@ export default async function Footer() {
             </nav>
           ) : null}
           <div className="col-span-1 text-black dark:text-white lg:col-span-2">
-            <a aria-label="Github Repository" href="https://github.com/vercel/commerce">
+            <a aria-label="Github Repository" href="https://github.com/influxion/clever-cognition">
               <GitHubIcon className="h-6" />
             </a>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between space-y-4 pb-10 pt-6 text-sm md:flex-row">
           <p>
-            &copy; {copyrightDate} {SITE_NAME}. All rights reserved.
+            &copy; {currentYear} {SITE_NAME}. All rights reserved.
           </p>
           <div className="flex items-center text-sm text-white dark:text-black">
             <span className="text-black dark:text-white">Created by Jordon Nichols</span>

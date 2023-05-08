@@ -257,11 +257,21 @@ export async function getCollection(handle: string): Promise<Collection | undefi
   return reshapeCollection(res.body.data.collection);
 }
 
-export async function getCollectionProducts(handle: string): Promise<Product[]> {
+export async function getCollectionProducts({
+  handle,
+  reverse,
+  sortKey
+}: {
+  handle: string;
+  reverse?: boolean;
+  sortKey?: string;
+}): Promise<Product[]> {
   const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
     query: getCollectionProductsQuery,
     variables: {
-      handle
+      handle,
+      sortKey,
+      reverse
     }
   });
 

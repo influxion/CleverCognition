@@ -1,5 +1,3 @@
-
-
 export type Maybe<T> = T | null;
 
 export type Connection<T> = {

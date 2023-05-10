@@ -390,17 +390,17 @@ export async function getProducts({
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
 }
 
-export async function createCustomer({
-  input
-}: {
-  input: ShopifyCustomerCreate;
-}): Promise<ShopifyCustomer> {
+export async function createCustomer(input: ShopifyCustomerCreate): Promise<ShopifyCustomer> {
   const res = await shopifyFetch<ShopifyCustomerCreateOperation>({
     query: createCustomerMutation,
     variables: {
       input
     }
   });
-
-  return res.body.data.customer;
+  if (res.body.data.customerCreate.customerUserErrors.length)
+    console.log(res.body.data.customerCreate.customerUserErrors);
+  // throw new Error(
+  // `${res.body.data?.customerUserErrors.message}-${res.body.data?.customerUserErrors.code}`
+  // );
+  return res.body.data.customerCreate.customer;
 }

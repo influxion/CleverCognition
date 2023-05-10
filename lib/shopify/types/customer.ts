@@ -248,6 +248,24 @@ export enum CountryCode {
   ZZ = 'ZZ'
 }
 
+enum CustomerErrorCode {
+  ALREADY_ENABLED = 'ALREADY_ENABLED',
+  BAD_DOMAIN = 'BAD_DOMAIN',
+  BLANK = 'BLANK',
+  CONTAINS_HTML_TAGS = 'CONTAINS_HTML_TAGS',
+  CONTAINS_URL = 'CONTAINS_URL',
+  CUSTOMER_DISABLED = 'CUSTOMER_DISABLED',
+  INVALID = 'INVALID',
+  INVALID_MULTIPASS_REQUEST = 'INVALID_MULTIPASS_REQUEST',
+  NOT_FOUND = 'NOT_FOUND',
+  PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE = 'PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE',
+  TAKEN = 'TAKEN',
+  TOKEN_INVALID = 'TOKEN_INVALID',
+  TOO_LONG = 'TOO_LONG',
+  TOO_SHORT = 'TOO_SHORT',
+  UNIDENTIFIED_CUSTOMER = 'UNIDENTIFIED_CUSTOMER'
+}
+
 export type Customer = {
   acceptsMarketing: boolean;
   defaultAddress?: MailingAddress;
@@ -259,12 +277,18 @@ export type Customer = {
 };
 
 export type ShopifyCustomerCreate = {
-  acceptsMarketing: boolean;
+  acceptsMarketing?: boolean | null;
   email: string;
-  firstName?: string;
-  lastName?: string;
+  firstName?: string | null;
+  lastName?: string | null;
   password: string;
-  phone?: string;
+  phone?: string | null;
+};
+
+export type ShopifyCustomerUserErrors = {
+  code: CustomerErrorCode;
+  field: string[];
+  message: string;
 };
 
 export type ShopifyCustomer = {
@@ -305,7 +329,10 @@ export type MailingAddress = {
 
 export type ShopifyCustomerCreateOperation = {
   data: {
-    customer: ShopifyCustomer;
+    customerCreate: {
+      customer: ShopifyCustomer;
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
   };
   variables: {
     input: ShopifyCustomerCreate;

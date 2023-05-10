@@ -26,7 +26,7 @@ export default async function Navbar() {
         {menu.length ? (
           <ul className="hidden md:flex">
             {menu.map((item: Menu) => (
-              <li key={item.title}>
+              <li key={item.title} className="flex">
                 <Link
                   href={item.path}
                   className="rounded-lg px-2 py-1 text-gray-800 hover:text-gray-500 dark:text-gray-200 dark:hover:text-gray-400"
@@ -38,15 +38,17 @@ export default async function Navbar() {
           </ul>
         ) : null}
       </div>
-      <div className="hidden w-1/3 md:block">
-        <Search />
-      </div>
+      <div className="flex w-1/3 gap-2">
+        <div className="hidden w-full md:block">
+          <Search />
+        </div>
 
-      <div className="flex w-1/3 justify-end">
-        <Suspense fallback={<CartIcon className="h-6" />}>
-          {/* @ts-expect-error Server Component */}
-          <Cart />
-        </Suspense>
+        <div className="flex justify-end">
+          <Suspense fallback={<CartIcon className="h-6" />}>
+            {/* @ts-expect-error Server Component */}
+            <Cart />
+          </Suspense>
+        </div>
       </div>
     </nav>
   );

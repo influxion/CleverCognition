@@ -4,6 +4,7 @@ import CartButton from './button';
 
 export default async function Cart() {
   const cartId = cookies().get('cartId')?.value;
+
   let cartIdUpdated = false;
   let cart;
 

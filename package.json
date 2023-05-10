@@ -1,11 +1,11 @@
 {
   "private": true,
   "engines": {
-    "node": ">=16",
+    "node": ">=16.20.0",
     "pnpm": ">=7"
   },
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

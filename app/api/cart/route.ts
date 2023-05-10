@@ -3,10 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { addToCart, updateCart } from 'lib/shopify';
 import { isShopifyError } from 'lib/type-guards';
-
-function formatErrorMessage(err: Error): string {
-  return JSON.stringify(err, Object.getOwnPropertyNames(err));
-}
+import { formatErrorMessage } from 'utils/format-error-message';
 
 export async function POST(req: NextRequest): Promise<Response> {
   const cartId = cookies().get('cartId')?.value;
@@ -54,4 +51,3 @@ export async function PUT(req: NextRequest): Promise<Response> {
     return NextResponse.json({ status: 500 });
   }
 }
-

@@ -12,6 +12,7 @@ import {
   getCollectionQuery,
   getCollectionsQuery
 } from './queries/collection';
+import { createCustomerMutation } from './queries/customer';
 import { getMenuQuery } from './queries/menu';
 import { getPageQuery, getPagesQuery } from './queries/page';
 import {
@@ -44,6 +45,11 @@ import {
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation
 } from './types';
+import {
+  ShopifyCustomer,
+  ShopifyCustomerCreate,
+  ShopifyCustomerCreateOperation
+} from './types/customer';
 
 const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -382,4 +388,19 @@ export async function getProducts({
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+}
+
+export async function createCustomer({
+  input
+}: {
+  input: ShopifyCustomerCreate;
+}): Promise<ShopifyCustomer> {
+  const res = await shopifyFetch<ShopifyCustomerCreateOperation>({
+    query: createCustomerMutation,
+    variables: {
+      input
+    }
+  });
+
+  return res.body.data.customer;
 }

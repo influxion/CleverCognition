@@ -1,42 +1,67 @@
 'use client';
-
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
 
 import SearchIcon from 'components/icons/search';
+import Input from 'components/global/input';
 
 export default function Search() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [searchBarOpen, setSearchBarOpen] = useState(false);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: any) {
     e.preventDefault();
 
-    const val = e.target as HTMLFormElement;
-    const search = val.search as HTMLInputElement;
+    const search = inputRef.current;
 
-    if (search.value) {
+    if (search && search.value) {
       router.push(`/search?q=${search.value}`);
     } else {
       router.push(`/search`);
+    }
+    if (search) {
+      search.value = '';
+      search.blur();
+    }
+    setSearchBarOpen(false);
+  }
+
+  function onClick() {
+    if (searchBarOpen && inputRef?.current?.value) {
+      onSubmit(new Event('submit', { bubbles: true, cancelable: true }));
+    } else {
+      setSearchBarOpen(!searchBarOpen);
+      if (!searchBarOpen && inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   }
 
   return (
     <form
       onSubmit={onSubmit}
-      className="relative m-0 flex w-full items-center border border-gray-200 bg-transparent p-0 dark:border-gray-500"
+      className="relative m-0 flex w-full items-center justify-end bg-transparent p-0"
     >
-      <input
-        type="text"
-        name="search"
-        placeholder="Search for products..."
-        autoComplete="off"
-        defaultValue={searchParams?.get('q') || ''}
-        className="w-full px-4 py-2 text-black dark:bg-black dark:text-gray-100"
-      />
-      <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
-        <SearchIcon className="h-5" />
-      </div>
+      <label
+        htmlFor="search"
+        className="relative flex h-full w-full items-center justify-end duration-200"
+      >
+        <Input
+          inputRef={inputRef}
+          type="text"
+          id="search"
+          name="search"
+          placeholder="Search for products..."
+          autoComplete="off"
+          className={`w-0 border-white duration-200 placeholder:invisible dark:border-black ${
+            searchBarOpen ? '!w-full !border-gray-500 placeholder:!visible' : ''
+          }`}
+        />
+        <button onClick={onClick} type="button" className="absolute right-0 mr-2 h-7">
+          <SearchIcon className="h-full w-full" />
+        </button>
+      </label>
     </form>
   );
 }

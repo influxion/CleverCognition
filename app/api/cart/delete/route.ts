@@ -1,12 +1,8 @@
-import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
-
 import { removeFromCart } from 'lib/shopify';
 import { isShopifyError } from 'lib/type-guards';
-
-function formatErrorMessage(err: Error): string {
-  return JSON.stringify(err, Object.getOwnPropertyNames(err));
-}
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import { formatErrorMessage } from 'utils/format-error-message';
 
 export async function POST(req: NextRequest): Promise<Response> {
   const cartId = cookies().get('cartId')?.value;

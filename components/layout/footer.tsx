@@ -3,7 +3,7 @@ import Link from 'next/link';
 import GitHubIcon from 'components/icons/github';
 import LogoIcon from 'components/icons/logo';
 import { getMenu } from 'lib/shopify';
-import { Menu } from 'lib/shopify/types';
+import { Menu } from "lib/shopify/types/Menu";
 
 const { SITE_NAME } = process.env;
 

@@ -248,23 +248,23 @@ export enum CountryCode {
   ZZ = 'ZZ'
 }
 
-enum CustomerErrorCode {
-  ALREADY_ENABLED = 'ALREADY_ENABLED',
-  BAD_DOMAIN = 'BAD_DOMAIN',
-  BLANK = 'BLANK',
-  CONTAINS_HTML_TAGS = 'CONTAINS_HTML_TAGS',
-  CONTAINS_URL = 'CONTAINS_URL',
-  CUSTOMER_DISABLED = 'CUSTOMER_DISABLED',
-  INVALID = 'INVALID',
-  INVALID_MULTIPASS_REQUEST = 'INVALID_MULTIPASS_REQUEST',
-  NOT_FOUND = 'NOT_FOUND',
-  PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE = 'PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE',
-  TAKEN = 'TAKEN',
-  TOKEN_INVALID = 'TOKEN_INVALID',
-  TOO_LONG = 'TOO_LONG',
-  TOO_SHORT = 'TOO_SHORT',
-  UNIDENTIFIED_CUSTOMER = 'UNIDENTIFIED_CUSTOMER'
-}
+// enum CustomerErrorCode {
+//   ALREADY_ENABLED = 'ALREADY_ENABLED',
+//   BAD_DOMAIN = 'BAD_DOMAIN',
+//   BLANK = 'BLANK',
+//   CONTAINS_HTML_TAGS = 'CONTAINS_HTML_TAGS',
+//   CONTAINS_URL = 'CONTAINS_URL',
+//   CUSTOMER_DISABLED = 'CUSTOMER_DISABLED',
+//   INVALID = 'INVALID',
+//   INVALID_MULTIPASS_REQUEST = 'INVALID_MULTIPASS_REQUEST',
+//   NOT_FOUND = 'NOT_FOUND',
+//   PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE = 'PASSWORD_STARTS_OR_ENDS_WITH_WHITESPACE',
+//   TAKEN = 'TAKEN',
+//   TOKEN_INVALID = 'TOKEN_INVALID',
+//   TOO_LONG = 'TOO_LONG',
+//   TOO_SHORT = 'TOO_SHORT',
+//   UNIDENTIFIED_CUSTOMER = 'UNIDENTIFIED_CUSTOMER'
+// }
 
 export type Customer = {
   acceptsMarketing: boolean;
@@ -285,8 +285,27 @@ export type ShopifyCustomerCreate = {
   phone?: string | null;
 };
 
+export type ShopifyAccessTokenCreate = {
+  email: string;
+  password: string;
+};
+
+export type ShopifyAccessToken = {
+  accessToken: string;
+  expiresAt: Date;
+};
+
+export type ShopifyDeleteAccessToken = {
+  deletedAccessToken: string;
+  deletedCustomerAccessTokenId: string;
+};
+
 export type ShopifyCustomerUserErrors = {
-  code: CustomerErrorCode;
+  field: string[];
+  message: string;
+};
+
+export type ShopifyUserErrors = {
   field: string[];
   message: string;
 };
@@ -336,5 +355,51 @@ export type ShopifyCustomerCreateOperation = {
   };
   variables: {
     input: ShopifyCustomerCreate;
+  };
+};
+
+export type ShopifyAccessTokenCreateOperation = {
+  data: {
+    customerAccessTokenCreate: {
+      customerAccessToken: ShopifyAccessToken;
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    input: ShopifyAccessTokenCreate;
+  };
+};
+
+export type ShopifyAccessTokenRenewOperation = {
+  data: {
+    customerAccessTokenRenew: {
+      customerAccessToken: ShopifyAccessToken;
+      userErrors: ShopifyUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+  };
+};
+
+export type ShopifyAccessTokenDeleteOperation = {
+  data: {
+    customerAccessTokenDelete: {
+      deletedAccessToken: string;
+      deletedCustomerAccessTokenId: string;
+      userErrors: ShopifyUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+  };
+};
+
+export type ShopifyCustomerOperation = {
+  data: {
+    customer: ShopifyCustomer
+  };
+  variables: {
+    customerAccessToken: string;
   };
 };

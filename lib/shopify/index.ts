@@ -12,7 +12,13 @@ import {
   getCollectionQuery,
   getCollectionsQuery
 } from './queries/collection';
-import { createCustomerMutation } from './queries/customer';
+import {
+  createAccessTokenMutation,
+  createCustomerMutation,
+  deleteAccessTokenMutation,
+  getCustomerQuery,
+  renewAccessTokenMutation
+} from './queries/customer';
 import { getMenuQuery } from './queries/menu';
 import { getPageQuery, getPagesQuery } from './queries/page';
 import {
@@ -20,35 +26,42 @@ import {
   getProductRecommendationsQuery,
   getProductsQuery
 } from './queries/product';
+import { Connection } from './types/__global';
+import { Menu, ShopifyMenuOperation } from './types/menu';
 import {
-  Cart,
   Collection,
-  Connection,
-  Menu,
-  Page,
-  Product,
-  ShopifyAddToCartOperation,
-  ShopifyCart,
-  ShopifyCartOperation,
   ShopifyCollection,
   ShopifyCollectionOperation,
   ShopifyCollectionProductsOperation,
-  ShopifyCollectionsOperation,
-  ShopifyCreateCartOperation,
-  ShopifyMenuOperation,
-  ShopifyPageOperation,
-  ShopifyPagesOperation,
+  ShopifyCollectionsOperation
+} from './types/collection';
+import { Page, ShopifyPageOperation, ShopifyPagesOperation } from './types/page';
+import {
+  Product,
   ShopifyProduct,
   ShopifyProductOperation,
   ShopifyProductRecommendationsOperation,
-  ShopifyProductsOperation,
+  ShopifyProductsOperation
+} from './types/product';
+import {
+  Cart,
+  ShopifyAddToCartOperation,
+  ShopifyCart,
+  ShopifyCartOperation,
+  ShopifyCreateCartOperation,
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation
-} from './types';
+} from './types/cart';
 import {
+  ShopifyAccessToken,
+  ShopifyAccessTokenCreate,
+  ShopifyAccessTokenCreateOperation,
+  ShopifyAccessTokenDeleteOperation,
+  ShopifyAccessTokenRenewOperation,
   ShopifyCustomer,
   ShopifyCustomerCreate,
-  ShopifyCustomerCreateOperation
+  ShopifyCustomerCreateOperation,
+  ShopifyCustomerOperation
 } from './types/customer';
 
 const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN!}`;
@@ -397,10 +410,65 @@ export async function createCustomer(input: ShopifyCustomerCreate): Promise<Shop
       input
     }
   });
-  if (res.body.data.customerCreate.customerUserErrors.length)
-    console.log(res.body.data.customerCreate.customerUserErrors);
-  // throw new Error(
-  // `${res.body.data?.customerUserErrors.message}-${res.body.data?.customerUserErrors.code}`
-  // );
-  return res.body.data.customerCreate.customer;
+  const gqlResponse = res.body.data.customerCreate;
+
+  if (gqlResponse?.customerUserErrors?.length) console.log(gqlResponse.customerUserErrors);
+
+  return gqlResponse.customer;
+}
+
+export async function createAccessToken(
+  input: ShopifyAccessTokenCreate
+): Promise<ShopifyAccessToken> {
+  const res = await shopifyFetch<ShopifyAccessTokenCreateOperation>({
+    query: createAccessTokenMutation,
+    variables: {
+      input
+    }
+  });
+  const gqlResponse = res.body.data.customerAccessTokenCreate;
+
+  if (gqlResponse?.customerUserErrors?.length) console.log(gqlResponse.customerUserErrors);
+
+  return gqlResponse.customerAccessToken;
+}
+
+export async function renewAccessToken(customerAccessToken: string): Promise<ShopifyAccessToken> {
+  const res = await shopifyFetch<ShopifyAccessTokenRenewOperation>({
+    query: renewAccessTokenMutation,
+    variables: {
+      customerAccessToken
+    }
+  });
+  const gqlResponse = res.body.data.customerAccessTokenRenew;
+
+  if (gqlResponse?.userErrors?.length) console.log(gqlResponse.userErrors);
+
+  return gqlResponse.customerAccessToken;
+}
+
+export async function deleteAccessToken(customerAccessToken: string): Promise<string> {
+  const res = await shopifyFetch<ShopifyAccessTokenDeleteOperation>({
+    query: deleteAccessTokenMutation,
+    variables: {
+      customerAccessToken
+    }
+  });
+  const gqlResponse = res.body.data.customerAccessTokenDelete;
+
+  if (gqlResponse?.userErrors?.length) console.log(gqlResponse.userErrors);
+
+  return gqlResponse.deletedAccessToken;
+}
+
+export async function getCustomer(customerAccessToken: string): Promise<ShopifyCustomer> {
+  const res = await shopifyFetch<ShopifyCustomerOperation>({
+    query: getCustomerQuery,
+    variables: {
+      customerAccessToken
+    }
+  });
+  const gqlResponse = res.body.data.customer;
+
+  return gqlResponse;
 }

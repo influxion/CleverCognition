@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import CloseIcon from 'components/icons/close';
 import MenuIcon from 'components/icons/menu';
-import { Menu } from "lib/shopify/types/Menu";
+import { Menu } from "lib/shopify/types/menu";
 import Search from './search';
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {

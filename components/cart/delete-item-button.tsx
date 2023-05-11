@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { startTransition, useState } from 'react';
 
 import clsx from 'clsx';
-import type { CartItem } from "lib/shopify/types/Cart";
+import type { CartItem } from "lib/shopify/types/cart";
 
 export default function DeleteItemButton({ item }: { item: CartItem }) {
   const router = useRouter();

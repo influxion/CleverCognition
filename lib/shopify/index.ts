@@ -12,13 +12,13 @@ import {
   getCollectionQuery,
   getCollectionsQuery
 } from './queries/collection';
+import { getCustomerQuery } from './queries/customer';
 import {
   createAccessTokenMutation,
   createCustomerMutation,
   deleteAccessTokenMutation,
-  getCustomerQuery,
   renewAccessTokenMutation
-} from './queries/customer';
+} from './mutations/customer';
 import { getMenuQuery } from './queries/menu';
 import { getPageQuery, getPagesQuery } from './queries/page';
 import {
@@ -440,11 +440,8 @@ export async function renewAccessToken(customerAccessToken: string): Promise<Sho
       customerAccessToken
     }
   });
-  const gqlResponse = res.body.data.customerAccessTokenRenew;
 
-  if (gqlResponse?.userErrors?.length) console.log(gqlResponse.userErrors);
-
-  return gqlResponse.customerAccessToken;
+  return res.body.data.customerAccessTokenRenew.customerAccessToken;
 }
 
 export async function deleteAccessToken(customerAccessToken: string): Promise<string> {
@@ -454,11 +451,8 @@ export async function deleteAccessToken(customerAccessToken: string): Promise<st
       customerAccessToken
     }
   });
-  const gqlResponse = res.body.data.customerAccessTokenDelete;
 
-  if (gqlResponse?.userErrors?.length) console.log(gqlResponse.userErrors);
-
-  return gqlResponse.deletedAccessToken;
+  return res.body.data.customerAccessTokenDelete.deletedAccessToken;
 }
 
 export async function getCustomer(customerAccessToken: string): Promise<ShopifyCustomer> {
@@ -468,7 +462,6 @@ export async function getCustomer(customerAccessToken: string): Promise<ShopifyC
       customerAccessToken
     }
   });
-  const gqlResponse = res.body.data.customer;
 
-  return gqlResponse;
+  return res.body.data.customer;
 }

@@ -1,9 +1,9 @@
 import { createCart, getCart } from 'lib/shopify';
-import { cookies } from 'next/headers';
 import CartButton from './button';
+import { getCookie } from 'utils/cookie';
 
 export default async function Cart() {
-  const cartId = cookies().get('cartId')?.value;
+  const cartId = getCookie('cartId');
 
   let cartIdUpdated = false;
   let cart;

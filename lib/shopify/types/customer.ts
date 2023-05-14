@@ -374,7 +374,6 @@ export type ShopifyAccessTokenRenewOperation = {
   data: {
     customerAccessTokenRenew: {
       customerAccessToken: ShopifyAccessToken;
-      userErrors: ShopifyUserErrors[];
     };
   };
   variables: {
@@ -387,7 +386,6 @@ export type ShopifyAccessTokenDeleteOperation = {
     customerAccessTokenDelete: {
       deletedAccessToken: string;
       deletedCustomerAccessTokenId: string;
-      userErrors: ShopifyUserErrors[];
     };
   };
   variables: {

@@ -1,7 +1,7 @@
 import { Money, Connection } from './__global';
+import { ShopifyCustomer } from './customer';
 import { Product } from './product';
 
-///
 export type Cart = Omit<ShopifyCart, 'lines'> & {
   lines: CartItem[];
 };
@@ -33,6 +33,11 @@ export type ShopifyCart = {
   };
   lines: Connection<CartItem>;
   totalQuantity: number;
+  // buyerIdentity: ShopifyCartBuyerIdentity;
+};
+
+export type ShopifyCartBuyerIdentity = {
+  customer: ShopifyCustomer;
 };
 
 export type ShopifyCartOperation = {

@@ -3,7 +3,7 @@ import Input from 'components/global/input';
 import Footer from 'components/layout/footer';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { signIn } from './sign-in.action';
+import { signIn } from './action';
 
 export default function AccountSignIn() {
   return (

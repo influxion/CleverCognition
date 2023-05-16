@@ -4,7 +4,8 @@ import {
   addToCartMutation,
   createCartMutation,
   editCartItemsMutation,
-  removeFromCartMutation
+  removeFromCartMutation,
+  updateBuyerIdentityMutation
 } from './mutations/cart';
 import { getCartQuery } from './queries/cart';
 import {
@@ -53,15 +54,18 @@ import {
   ShopifyUpdateCartOperation
 } from './types/cart';
 import {
+  Customer,
   ShopifyAccessToken,
   ShopifyAccessTokenCreate,
   ShopifyAccessTokenCreateOperation,
   ShopifyAccessTokenDeleteOperation,
   ShopifyAccessTokenRenewOperation,
+  ShopifyBuyerIdentityInput,
   ShopifyCustomer,
   ShopifyCustomerCreate,
   ShopifyCustomerCreateOperation,
-  ShopifyCustomerOperation
+  ShopifyCustomerOperation,
+  ShopifyUpdateBuyerIdentityOperation
 } from './types/customer';
 
 const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN!}`;
@@ -196,6 +200,14 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
   }
 
   return reshapedProducts;
+};
+
+const reshapeCustomer = (customer: ShopifyCustomer) => {
+  return {
+    ...customer,
+    addresses: removeEdgesAndNodes(customer.addresses),
+    orders: removeEdgesAndNodes(customer.orders)
+  };
 };
 
 export async function createCart(): Promise<Cart> {
@@ -408,7 +420,8 @@ export async function createCustomer(input: ShopifyCustomerCreate): Promise<Shop
     query: createCustomerMutation,
     variables: {
       input
-    }
+    },
+    cache: 'no-store'
   });
   const gqlResponse = res.body.data.customerCreate;
 
@@ -424,7 +437,8 @@ export async function createAccessToken(
     query: createAccessTokenMutation,
     variables: {
       input
-    }
+    },
+    cache: 'no-store'
   });
   const gqlResponse = res.body.data.customerAccessTokenCreate;
 
@@ -438,7 +452,8 @@ export async function renewAccessToken(customerAccessToken: string): Promise<Sho
     query: renewAccessTokenMutation,
     variables: {
       customerAccessToken
-    }
+    },
+    cache: 'no-store'
   });
 
   return res.body.data.customerAccessTokenRenew.customerAccessToken;
@@ -449,19 +464,41 @@ export async function deleteAccessToken(customerAccessToken: string): Promise<st
     query: deleteAccessTokenMutation,
     variables: {
       customerAccessToken
-    }
+    },
+    cache: 'no-store'
   });
 
   return res.body.data.customerAccessTokenDelete.deletedAccessToken;
 }
 
-export async function getCustomer(customerAccessToken: string): Promise<ShopifyCustomer> {
+export async function getCustomer(customerAccessToken: string): Promise<Customer | null> {
   const res = await shopifyFetch<ShopifyCustomerOperation>({
     query: getCustomerQuery,
     variables: {
       customerAccessToken
-    }
+    },
+    cache: 'no-store'
   });
 
-  return res.body.data.customer;
+  return reshapeCustomer(res.body.data.customer);
+}
+
+export async function updateBuyerIdentity({
+  cartId,
+  buyerIdentity
+}: {
+  cartId: string;
+  buyerIdentity: ShopifyBuyerIdentityInput;
+}): Promise<Cart | null> {
+  const res = await shopifyFetch<ShopifyUpdateBuyerIdentityOperation>({
+    query: updateBuyerIdentityMutation,
+    variables: { cartId, buyerIdentity },
+    cache: 'no-store'
+  });
+
+  if (!res.body.data.cart) {
+    return null;
+  }
+
+  return reshapeCart(res.body.data.cart);
 }

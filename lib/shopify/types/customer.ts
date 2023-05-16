@@ -1,3 +1,6 @@
+import { Connection } from './__global';
+import { ShopifyCart } from './cart';
+
 /* eslint-disable */
 export enum CountryCode {
   AC = 'AC',
@@ -266,15 +269,6 @@ export enum CountryCode {
 //   UNIDENTIFIED_CUSTOMER = 'UNIDENTIFIED_CUSTOMER'
 // }
 
-export type Customer = {
-  acceptsMarketing: boolean;
-  defaultAddress?: MailingAddress;
-  displayName: string;
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-};
 
 export type ShopifyCustomerCreate = {
   acceptsMarketing?: boolean | null;
@@ -323,6 +317,124 @@ export type ShopifyCustomer = {
   phone?: string;
   tags: string[];
   updatedAt: Date;
+  addresses: Connection<MailingAddress[]>;
+  orders: Connection<ShopifyOrder[]>;
+};
+
+export type Customer = {
+  acceptsMarketing: boolean;
+  createdAt: Date;
+  defaultAddress?: MailingAddress;
+  displayName: string;
+  email?: string;
+  firstName?: string;
+  id: string;
+  lastName?: string;
+  numberOfOrders: number;
+  phone?: string;
+  tags: string[];
+  updatedAt: Date;
+  addresses: MailingAddress[];
+  orders: ShopifyOrder[];
+};
+
+export type ShopifyOrder = {
+  billingAddress?: MailingAddress;
+  cancelReason?: string;
+  canceledAt?: Date;
+  currencyCode: string;
+  currentSubtotalPrice: MoneyV2;
+  currentTotalDuties?: MoneyV2;
+  currentTotalPrice: MoneyV2;
+  currentTotalTax: MoneyV2;
+  customAttributes: Attribute[];
+  customerLocale?: string;
+  customerUrl?: string;
+  edited: boolean;
+  email?: string;
+  financialStatus?: string;
+  fulfillmentStatus: string;
+  id: string;
+  name: string;
+  orderNumber: number;
+  originalTotalDuties?: MoneyV2;
+  originalTotalPrice: MoneyV2;
+  phone?: string;
+  processedAt: Date;
+  shippingAddress?: MailingAddress;
+  shippingDiscountAllocations: DiscountAllocation[];
+  statusUrl: string;
+  subtotalPrice?: MoneyV2;
+  successfulFulfillments?: Fulfillment[];
+  totalPrice: MoneyV2;
+  totalRefunded: MoneyV2;
+  totalShippingPrice: MoneyV2;
+  totalTax?: MoneyV2;
+};
+
+export type MoneyV2 = {
+  key: string;
+  value?: string;
+};
+
+export type PricingPercentageValue = {
+  percentage: number;
+};
+
+export type Fulfillment = {
+  trackingCompany: string;
+  trackingInfo: FulfillmentTrackingInfo[];
+};
+
+export type FulfillmentTrackingInfo = {
+  number: string;
+  url: string;
+};
+
+export type Attribute = {
+  amount: number;
+  currencyCode: string;
+};
+
+export type DiscountAllocation = {
+  allocatedAmount: MoneyV2;
+  discountApplication: DiscountApplication;
+};
+
+interface DiscountApplication {
+  allocationMethod: string;
+  targetSelection: string;
+  targetType: string;
+  value: PricingValue; // Assuming PricingValue is another interface or type
+}
+
+type PricingValue = MoneyV2 | PricingPercentageValue;
+
+export type ShopifyBuyerIdentityInput = {
+  countryCode?: CountryCode; // The country where the buyer is located.
+  customerAccessToken?: string; // The access token used to identify the customer associated with the cart.
+  deliveryAddressPreferences?: DeliveryAddressInput[]; // An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+  email?: string; // The email address of the buyer that is interacting with the cart.
+  phone?: string; // The phone number of the buyer that is interacting with the cart.
+  walletPreferences?: string[]; // A set of wallet preferences tied to the buyer that is interacting with the cart.
+};
+
+export type DeliveryAddressInput = {
+  customerAddressId?: string; // The ID of a customer address that is associated with the buyer that is interacting with the cart.
+  deliveryAddress?: MailingAddressInput; // Specifies the fields accepted to create or update a mailing address.
+};
+
+export type MailingAddressInput = {
+  address1?: string; // The first line of the address. Typically the street address or PO Box number.
+  address2?: string; // The second line of the address. Typically the number of the apartment, suite, or unit.
+  city?: string; // The name of the city, district, village, or town.
+  company?: string; // The name of the customer's company or organization.
+  country?: string; // The name of the country.
+  firstName?: string; // The first name of the customer.
+  lastName?: string; // The last name of the customer.
+  phone?: string; // A unique phone number for the customer. Formatted using E.164 standard. For example, +16135551111.
+  province?: string; // The region of the address, such as the province, state, or district.
+  zip?: string; // The zip code of the address.
 };
 
 export type MailingAddress = {
@@ -395,9 +507,19 @@ export type ShopifyAccessTokenDeleteOperation = {
 
 export type ShopifyCustomerOperation = {
   data: {
-    customer: ShopifyCustomer
+    customer: ShopifyCustomer;
   };
   variables: {
     customerAccessToken: string;
+  };
+};
+
+export type ShopifyUpdateBuyerIdentityOperation = {
+  data: {
+    cart: ShopifyCart;
+  };
+  variables: {
+    cartId: string;
+    buyerIdentity: ShopifyBuyerIdentityInput;
   };
 };

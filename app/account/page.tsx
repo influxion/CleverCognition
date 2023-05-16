@@ -1,31 +1,13 @@
-import AccountSignIn from 'components/account/sign-in';
-import { signOut, refreshToken, validateToken } from './action';
-import { getCookie } from 'utils/cookie';
+import AccountSignIn from 'components/account/sign-in/index';
+import { getCustomerWithRevalidate, linkCustomerToCart } from 'app/action';
+import AccountView from 'components/account/view';
 
 export default async function AccountPage() {
-  const accessToken = getCookie('accessToken');
-  const expiresAt = getCookie('expiresAt');
+  const customer = await getCustomerWithRevalidate();
 
-  if (!accessToken) return <AccountSignIn />;
+  if (!customer) return <AccountSignIn />;
 
-  if (expiresAt ? new Date(expiresAt) < new Date() : false) {
-    await refreshToken(accessToken);
-  }
+  await linkCustomerToCart(customer);
 
-  const customer = await validateToken(accessToken);
-
-  return (
-    <div>
-      {JSON.stringify(customer)}
-      <form action={signOut}>
-        <input
-          type="text"
-          defaultValue={accessToken}
-          className="hidden"
-          name="customerAccessToken"
-        />
-        <button type="submit">Log Out</button>
-      </form>
-    </div>
-  );
+  return <AccountView customer={customer} />;
 }

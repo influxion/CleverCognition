@@ -6,11 +6,10 @@ import { setCookie } from 'utils/cookie';
 
 export async function signOut() {
   const accessToken = await getAccessToken();
+  setCookie('accessToken', '');
+  setCookie('expiresAt', '');
   try {
     await deleteAccessToken(accessToken || '');
-
-    setCookie('accessToken', '');
-    setCookie('expiresAt', '');
 
     revalidatePath('/account');
   } catch (e) {

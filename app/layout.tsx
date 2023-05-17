@@ -2,6 +2,7 @@ import Navbar from 'components/layout/navbar';
 import { Inter } from 'next/font/google';
 import { ReactNode, Suspense } from 'react';
 import './globals.css';
+import Footer from 'components/layout/footer';
 
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
 
@@ -39,6 +40,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <Suspense>
           <main>{children}</main>
         </Suspense>
+        {/* @ts-expect-error Server Component */}
+        <Footer />
       </body>
     </html>
   );

@@ -19,8 +19,10 @@ export async function getAccessToken() {
   return accessToken;
 }
 
-export async function getCustomerWithRevalidate() {
-  const accessToken = await getAccessToken();
+export async function getCustomerWithRevalidate(accessToken?: string) {
+  if(!accessToken) {
+    accessToken = await getAccessToken();
+  }
 
   if (!accessToken) return;
 

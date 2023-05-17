@@ -45,20 +45,24 @@ export default function Search() {
     >
       <label
         htmlFor="search"
-        className="relative flex h-full w-full items-center justify-end duration-200"
+        className="relative flex h-full w-full items-center justify-start duration-200 md:justify-end"
       >
         <Input
-          inputRef={inputRef}
+          inputref={inputRef}
           type="text"
           id="search"
           name="search"
           placeholder="Search for products..."
           autoComplete="off"
-          className={`w-0 border-white duration-200 placeholder:invisible dark:border-black ${
+          className={`w-0 border-white pl-10 duration-200 placeholder:invisible dark:border-black md:pl-2 ${
             searchBarOpen ? '!w-full !border-gray-500 placeholder:!visible' : ''
           }`}
         />
-        <button onClick={onClick} type="button" className="absolute right-0 mr-2 h-7">
+        <button
+          onClick={onClick}
+          type="button"
+          className="absolute left-0 mx-2 h-7 md:left-auto md:right-0"
+        >
           <SearchIcon className="h-full w-full" />
         </button>
       </label>

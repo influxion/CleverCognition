@@ -50,3 +50,14 @@ export const deleteAccessTokenMutation = /* GraphQL */ `
     }
   }
 `;
+
+export const customerRecoverMutation = /* GraphQL */ `
+  mutation customerRecover($email: String!) {
+    customerRecover(email: $email) {
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;

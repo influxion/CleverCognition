@@ -17,6 +17,7 @@ import { getCustomerQuery } from './queries/customer';
 import {
   createAccessTokenMutation,
   createCustomerMutation,
+  customerRecoverMutation,
   deleteAccessTokenMutation,
   renewAccessTokenMutation
 } from './mutations/customer';
@@ -55,6 +56,7 @@ import {
 } from './types/cart';
 import {
   Customer,
+  ShopifCustomerRecoverOperation,
   ShopifyAccessToken,
   ShopifyAccessTokenCreate,
   ShopifyAccessTokenCreateOperation,
@@ -501,4 +503,21 @@ export async function updateBuyerIdentity({
   }
 
   return reshapeCart(res.body.data.cart);
+}
+
+export async function customerRecover(email: string): Promise<Boolean> {
+  const res = await shopifyFetch<ShopifCustomerRecoverOperation>({
+    query: customerRecoverMutation,
+    variables: { email },
+    cache: 'no-store'
+  });
+
+  const gqlResponse = res.body.data.customerRecover;
+
+  if (gqlResponse?.customerUserErrors?.length) {
+    console.log(gqlResponse.customerUserErrors);
+    return false;
+  }
+
+  return true;
 }

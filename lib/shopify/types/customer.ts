@@ -269,7 +269,6 @@ export enum CountryCode {
 //   UNIDENTIFIED_CUSTOMER = 'UNIDENTIFIED_CUSTOMER'
 // }
 
-
 export type ShopifyCustomerCreate = {
   acceptsMarketing?: boolean | null;
   email: string;
@@ -521,5 +520,16 @@ export type ShopifyUpdateBuyerIdentityOperation = {
   variables: {
     cartId: string;
     buyerIdentity: ShopifyBuyerIdentityInput;
+  };
+};
+
+export type ShopifCustomerRecoverOperation = {
+  data: {
+    customerRecover: {
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    email: string;
   };
 };

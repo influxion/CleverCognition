@@ -4,7 +4,6 @@ import { signUp } from './action';
 
 export default async function SignUpPage() {
   return (
-    <>
       <div className="mx-auto my-20 flex min-h-[50vh] max-w-7xl justify-center">
         <form
           action={signUp}
@@ -45,6 +44,5 @@ export default async function SignUpPage() {
           </Button>
         </form>
       </div>
-    </>
   );
 }

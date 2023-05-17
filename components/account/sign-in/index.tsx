@@ -16,7 +16,7 @@ export default function AccountSignIn() {
           <Input type="email" name="email" placeholder="Email" />
           <Input type="password" name="password" placeholder="Password" className="w-full" />
           <div className="w-full">
-            <Link href="/reset-password" className="mt-1 block text-sm font-medium">
+            <Link href="/account/reset" className="mt-1 block text-sm font-medium">
               Forgot password?
             </Link>
           </div>

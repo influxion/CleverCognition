@@ -1,7 +1,6 @@
 import { Connection } from './__global';
 import { ShopifyCart } from './cart';
 
-/* eslint-disable */
 export enum CountryCode {
   AC = 'AC',
   AD = 'AD',
@@ -306,7 +305,7 @@ export type ShopifyUserErrors = {
 export type ShopifyCustomer = {
   acceptsMarketing: boolean;
   createdAt: Date;
-  defaultAddress?: MailingAddress;
+  defaultAddress?: ShopifyMailingAddress;
   displayName: string;
   email?: string;
   firstName?: string;
@@ -316,14 +315,14 @@ export type ShopifyCustomer = {
   phone?: string;
   tags: string[];
   updatedAt: Date;
-  addresses: Connection<MailingAddress[]>;
+  addresses: Connection<ShopifyMailingAddress[]>;
   orders: Connection<ShopifyOrder[]>;
 };
 
 export type Customer = {
   acceptsMarketing: boolean;
   createdAt: Date;
-  defaultAddress?: MailingAddress;
+  defaultAddress?: ShopifyMailingAddress;
   displayName: string;
   email?: string;
   firstName?: string;
@@ -333,12 +332,12 @@ export type Customer = {
   phone?: string;
   tags: string[];
   updatedAt: Date;
-  addresses: MailingAddress[];
+  addresses: ShopifyMailingAddress[];
   orders: ShopifyOrder[];
 };
 
 export type ShopifyOrder = {
-  billingAddress?: MailingAddress;
+  billingAddress?: ShopifyMailingAddress;
   cancelReason?: string;
   canceledAt?: Date;
   currencyCode: string;
@@ -360,7 +359,7 @@ export type ShopifyOrder = {
   originalTotalPrice: MoneyV2;
   phone?: string;
   processedAt: Date;
-  shippingAddress?: MailingAddress;
+  shippingAddress?: ShopifyMailingAddress;
   shippingDiscountAllocations: DiscountAllocation[];
   statusUrl: string;
   subtotalPrice?: MoneyV2;
@@ -412,18 +411,18 @@ type PricingValue = MoneyV2 | PricingPercentageValue;
 export type ShopifyBuyerIdentityInput = {
   countryCode?: CountryCode; // The country where the buyer is located.
   customerAccessToken?: string; // The access token used to identify the customer associated with the cart.
-  deliveryAddressPreferences?: DeliveryAddressInput[]; // An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+  deliveryAddressPreferences?: ShopifyDeliveryAddressInput[]; // An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
   email?: string; // The email address of the buyer that is interacting with the cart.
   phone?: string; // The phone number of the buyer that is interacting with the cart.
   walletPreferences?: string[]; // A set of wallet preferences tied to the buyer that is interacting with the cart.
 };
 
-export type DeliveryAddressInput = {
+export type ShopifyDeliveryAddressInput = {
   customerAddressId?: string; // The ID of a customer address that is associated with the buyer that is interacting with the cart.
-  deliveryAddress?: MailingAddressInput; // Specifies the fields accepted to create or update a mailing address.
+  deliveryAddress?: ShopifyMailingAddressInput; // Specifies the fields accepted to create or update a mailing address.
 };
 
-export type MailingAddressInput = {
+export type ShopifyMailingAddressInput = {
   address1?: string; // The first line of the address. Typically the street address or PO Box number.
   address2?: string; // The second line of the address. Typically the number of the apartment, suite, or unit.
   city?: string; // The name of the city, district, village, or town.
@@ -436,7 +435,7 @@ export type MailingAddressInput = {
   zip?: string; // The zip code of the address.
 };
 
-export type MailingAddress = {
+export type ShopifyMailingAddress = {
   address1?: string;
   address2?: string;
   city?: string;
@@ -531,5 +530,39 @@ export type ShopifCustomerRecoverOperation = {
   };
   variables: {
     email: string;
+  };
+};
+
+export type ShopifyCustomerUpdateOperation = {
+  data: {
+    customerUpdate: {
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+    customer: ShopifyCustomerUpdateInput;
+  };
+};
+
+export type ShopifyCustomerUpdateInput = {
+  acceptsMarketing?: boolean;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  password?: string;
+  phone?: string;
+};
+
+export type ShopifyCustomerAddressCreateOperation = {
+  data: {
+    customerAddressCreate: {
+      customerAddress: ShopifyMailingAddress;
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+    address: ShopifyMailingAddressInput;
   };
 };

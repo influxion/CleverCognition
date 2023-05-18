@@ -1,9 +1,9 @@
-import AccountSignIn from 'components/account/sign-in/index';
-import { getCustomerWithRevalidate } from 'app/action';
-import AccountDetails from '../../components/account/account-details';
-import AccountLinks from 'components/account/account-links';
-import SignOutButton from 'components/account/sign-out-button';
-import { Suspense } from 'react';
+import AccountSignIn from "components/account/sign-in/index";
+import { getCustomerWithRevalidate } from "app/action";
+import AccountDetails from "../../components/account/account-details";
+import AccountLinks from "components/account/account-links";
+import SignOutButton from "components/account/sign-out-button";
+import { Suspense } from "react";
 
 export default async function AccountPage() {
   const customer = await getCustomerWithRevalidate();

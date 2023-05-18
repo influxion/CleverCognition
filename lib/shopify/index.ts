@@ -17,7 +17,9 @@ import { getCustomerQuery } from './queries/customer';
 import {
   createAccessTokenMutation,
   createCustomerMutation,
+  customerAddressCreateMutation,
   customerRecoverMutation,
+  customerUpdateMutation,
   deleteAccessTokenMutation,
   renewAccessTokenMutation
 } from './mutations/customer';
@@ -64,9 +66,13 @@ import {
   ShopifyAccessTokenRenewOperation,
   ShopifyBuyerIdentityInput,
   ShopifyCustomer,
+  ShopifyCustomerAddressCreateOperation,
   ShopifyCustomerCreate,
   ShopifyCustomerCreateOperation,
   ShopifyCustomerOperation,
+  ShopifyCustomerUpdateInput,
+  ShopifyCustomerUpdateOperation,
+  ShopifyMailingAddressInput,
   ShopifyUpdateBuyerIdentityOperation
 } from './types/customer';
 
@@ -317,7 +323,9 @@ export async function getCollectionProducts({
 }
 
 export async function getCollections(): Promise<Collection[]> {
-  const res = await shopifyFetch<ShopifyCollectionsOperation>({ query: getCollectionsQuery });
+  const res = await shopifyFetch<ShopifyCollectionsOperation>({
+    query: getCollectionsQuery
+  });
   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
   const collections = [
     {
@@ -513,6 +521,52 @@ export async function customerRecover(email: string): Promise<Boolean> {
   });
 
   const gqlResponse = res.body.data.customerRecover;
+
+  if (gqlResponse?.customerUserErrors?.length) {
+    console.log(gqlResponse.customerUserErrors);
+    return false;
+  }
+
+  return true;
+}
+
+export async function customerUpdate({
+  customer,
+  customerAccessToken
+}: {
+  customer: ShopifyCustomerUpdateInput;
+  customerAccessToken: string;
+}): Promise<Boolean> {
+  const res = await shopifyFetch<ShopifyCustomerUpdateOperation>({
+    query: customerUpdateMutation,
+    variables: { customer, customerAccessToken },
+    cache: 'no-store'
+  });
+
+  const gqlResponse = res.body.data.customerUpdate;
+
+  if (gqlResponse?.customerUserErrors?.length) {
+    console.log(gqlResponse.customerUserErrors);
+    return false;
+  }
+
+  return true;
+}
+
+export async function customerAddressCreate({
+  customerAccessToken,
+  address
+}: {
+  customerAccessToken: string;
+  address: ShopifyMailingAddressInput;
+}): Promise<Boolean> {
+  const res = await shopifyFetch<ShopifyCustomerAddressCreateOperation>({
+    query: customerAddressCreateMutation,
+    variables: { customerAccessToken, address },
+    cache: 'no-store'
+  });
+
+  const gqlResponse = res.body.data.customerAddressCreate;
 
   if (gqlResponse?.customerUserErrors?.length) {
     console.log(gqlResponse.customerUserErrors);

@@ -61,3 +61,28 @@ export const customerRecoverMutation = /* GraphQL */ `
     }
   }
 `;
+
+export const customerUpdateMutation = /* GraphQL */ `
+  mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: String!) {
+    customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const customerAddressCreateMutation = /* GraphQL */ `
+  mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessToken: String!) {
+    customerAddressCreate(address: $address, customerAccessToken: $customerAccessToken) {
+      customerAddress {
+        id
+      }
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;

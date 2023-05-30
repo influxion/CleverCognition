@@ -7,7 +7,6 @@ export function getCookie(name: string) {
 }
 
 export function setCookie(name: string, value: string) {
-  //@ts-expect-error
   cookies().set(name, value, {
     path: '/',
     sameSite: 'strict',

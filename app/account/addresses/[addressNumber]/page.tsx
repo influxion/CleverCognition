@@ -15,7 +15,6 @@ export default async function EditAddressPage({
   params: { addressNumber: string };
 }) {
   const customer = await getCustomerWithRevalidate();
-  console.log('test');
 
   if (!customer) return redirect('/account');
 

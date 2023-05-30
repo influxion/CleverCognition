@@ -12,7 +12,6 @@ export async function signOut() {
     await deleteAccessToken(accessToken || '');
 
     revalidatePath('/account');
-    revalidatePath('/account/addresses');
   } catch (e) {
     console.log(e);
   }

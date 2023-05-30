@@ -81,7 +81,7 @@ import {
   ShopifyMailingAddressInput,
   ShopifyUpdateBuyerIdentityOperation
 } from './types/customer';
-import { revalidate } from 'app/[page]/page';
+import { setCookie } from 'utils/cookie';
 
 const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -507,6 +507,10 @@ export async function getCustomer(customerAccessToken: string): Promise<Customer
     },
     cache: 'no-store'
   });
+
+  if (!res.body.data.customer) {
+    return null;
+  }
 
   return reshapeCustomer(res.body.data.customer);
 }

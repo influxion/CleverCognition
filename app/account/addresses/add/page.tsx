@@ -13,7 +13,9 @@ export default async function AddAddressPage() {
   return (
     <Suspense>
       <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">
-        <BackButton href="/account/addresses">Addresses</BackButton>
+        <BackButton href="/account/addresses" noRevalidate={true}>
+          Addresses
+        </BackButton>
 
         <h2 className="my-8 w-full text-center text-4xl">Add Address</h2>
         <form action={createAddress} className="flex w-full flex-col gap-4">

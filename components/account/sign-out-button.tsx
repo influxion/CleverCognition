@@ -1,11 +1,11 @@
 'use server';
 import { signOut } from 'app/account/action';
-import Button from 'components/global/button';
+import SubmitButton from 'components/global/submit-button';
 
 export default async function SignOutButton() {
   return (
     <form action={signOut}>
-      <Button type="submit">Sign out</Button>
+      <SubmitButton>Sign out</SubmitButton>
     </form>
   );
 }

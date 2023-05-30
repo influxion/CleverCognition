@@ -19,14 +19,24 @@ export async function getAccessToken() {
   return accessToken;
 }
 
-export async function getCustomerWithRevalidate(accessToken?: string) {
-  if(!accessToken) {
+export async function getCustomerWithRevalidate({
+  accessToken,
+  path
+}: {
+  accessToken?: string;
+  path?: string;
+} = {}) {
+  if (!accessToken) {
     accessToken = await getAccessToken();
   }
 
-  if (!accessToken) return;
+  if (!accessToken) return null;
 
   const customer = await getCustomer(accessToken);
+
+  if (path) {
+    revalidatePath(path);
+  }
 
   return customer;
 }

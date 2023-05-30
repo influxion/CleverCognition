@@ -1,6 +1,6 @@
 import { updateAccount } from 'app/account/action';
-import Button from 'components/global/button';
-import Input from 'components/global/input';
+import { Input } from 'components/ui/input';
+import SubmitButton from 'components/global/submit-button';
 import { Customer } from 'lib/shopify/types/customer';
 
 export default function AccountDetails({ customer }: { customer: Customer }) {
@@ -11,16 +11,18 @@ export default function AccountDetails({ customer }: { customer: Customer }) {
           className="w-full"
           placeholder="First Name"
           name="first-name"
+          required
           defaultValue={customer.firstName}
         />
         <Input
           className="w-full"
           placeholder="Last Name"
           name="last-name"
+          required
           defaultValue={customer.lastName}
         />
       </div>
-      <Input placeholder="Email" type='email' required name="email" defaultValue={customer.email} />
+      <Input placeholder="Email" type="email" required name="email" defaultValue={customer.email} />
       {/* <Input placeholder="Phone Number" name="phone" defaultValue={customer.phone} /> */}
       <label className="flex items-center gap-2">
         <input
@@ -31,9 +33,7 @@ export default function AccountDetails({ customer }: { customer: Customer }) {
         />
         <p>Recieve marketing messages (Optional)</p>
       </label>
-      <Button className="mt-8" type="submit">
-        Save
-      </Button>
+      <SubmitButton className="mt-8">Save</SubmitButton>
     </form>
   );
 }

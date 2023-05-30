@@ -18,7 +18,7 @@ export default function AccountLinks({
 }
 
 export function AccountOrdersLink({ customer }: { customer: Customer }) {
-  return (
+  return customer.numberOfOrders > 0 ? (
     <Link
       href="/account/orders"
       className="flex flex-col gap-4 rounded border p-6 outline-1 hover:outline focus:outline"
@@ -32,6 +32,17 @@ export function AccountOrdersLink({ customer }: { customer: Customer }) {
         </p>
       ) : null}
     </Link>
+  ) : (
+    <div className="flex flex-col gap-4 rounded border p-6 outline-1 hover:outline focus:outline">
+      <h4 className="text-xl font-bold ">Orders</h4>
+      <p>View and manage your orders.</p>
+      {customer.numberOfOrders ? (
+        <p className="font-bold">
+          You have {customer.numberOfOrders} order
+          {customer.numberOfOrders == 1 ? '' : 's'}.
+        </p>
+      ) : null}
+    </div>
   );
 }
 

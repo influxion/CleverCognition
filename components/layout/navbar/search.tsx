@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import SearchIcon from 'components/icons/search';
-import Input from 'components/global/input';
+import { Input } from 'components/ui/input';
 
 export default function Search() {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function Search() {
         className="relative flex h-full w-full items-center justify-start duration-200 md:justify-end"
       >
         <Input
-          inputref={inputRef}
+          ref={inputRef}
           type="text"
           id="search"
           name="search"

@@ -1,7 +1,7 @@
-import Button from 'components/global/button';
-import Input from 'components/global/input';
+import { Input } from 'components/ui/input';
 import Link from 'next/link';
 import { signIn } from './action';
+import SubmitButton from '../../global/submit-button';
 
 export default function AccountSignIn() {
   return (
@@ -21,9 +21,7 @@ export default function AccountSignIn() {
             </Link>
           </div>
 
-          <Button className="mt-8" type="submit">
-            Sign In
-          </Button>
+          <SubmitButton className="mt-8">Sign In</SubmitButton>
         </form>
         <div className="flex w-full flex-col items-center justify-center gap-12 p-4 py-12 md:p-12">
           <h5 className="text-center text-4xl">Not a user?</h5>

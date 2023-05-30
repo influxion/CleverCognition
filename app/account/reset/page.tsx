@@ -1,6 +1,6 @@
-import Input from 'components/global/input';
-import Button from 'components/global/button';
+import { Input } from 'components/ui/input';
 import { resetPassword } from './action';
+import SubmitButton from 'components/global/submit-button';
 
 export default async function AccountResetPage() {
   return (
@@ -12,9 +12,9 @@ export default async function AccountResetPage() {
         <h3 className="mb-8 text-center text-4xl">Reset Password</h3>
 
         <Input type="email" name="email" placeholder="Email *" required />
-        <Button className="mt-8" type="submit">
+        <SubmitButton className="mt-8">
           Send Reset Email
-        </Button>
+        </SubmitButton>
       </form>
     </div>
   );

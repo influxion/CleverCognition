@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { ReactNode, Suspense } from 'react';
 import './globals.css';
 import Footer from 'components/layout/footer';
+import NotificationCenter from 'components/notification-center';
 
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
 
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body className="bg-white text-black selection:bg-teal-300 dark:bg-black dark:text-white dark:selection:bg-fuchsia-600 dark:selection:text-white">
         {/* @ts-expect-error Server Component */}
         <Navbar />
+        <NotificationCenter />
         <Suspense>
           <main>{children}</main>
         </Suspense>

@@ -18,6 +18,9 @@ import {
   createAccessTokenMutation,
   createCustomerMutation,
   customerAddressCreateMutation,
+  customerAddressDeleteMutation,
+  customerAddressUpdateMutation,
+  customerDefaultAddressUpdateMutation,
   customerRecoverMutation,
   customerUpdateMutation,
   deleteAccessTokenMutation,
@@ -67,14 +70,18 @@ import {
   ShopifyBuyerIdentityInput,
   ShopifyCustomer,
   ShopifyCustomerAddressCreateOperation,
+  ShopifyCustomerAddressDeleteOperation,
+  ShopifyCustomerAddressUpdateOperation,
   ShopifyCustomerCreate,
   ShopifyCustomerCreateOperation,
+  ShopifyCustomerDefaultAddressUpdateOperation,
   ShopifyCustomerOperation,
   ShopifyCustomerUpdateInput,
   ShopifyCustomerUpdateOperation,
   ShopifyMailingAddressInput,
   ShopifyUpdateBuyerIdentityOperation
 } from './types/customer';
+import { revalidate } from 'app/[page]/page';
 
 const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -86,12 +93,14 @@ export async function shopifyFetch<T>({
   query,
   variables,
   headers,
-  cache = 'force-cache'
+  cache,
+  revalidate = false
 }: {
   query: string;
   variables?: ExtractVariables<T>;
   headers?: HeadersInit;
   cache?: RequestCache;
+  revalidate?: boolean;
 }): Promise<{ status: number; body: T } | never> {
   try {
     const result = await fetch(endpoint, {
@@ -105,8 +114,8 @@ export async function shopifyFetch<T>({
         ...(query && { query }),
         ...(variables && { variables })
       }),
-      cache,
-      next: { revalidate: 900 } // 15 minutes
+      cache: cache ? cache : undefined,
+      next: revalidate ? { revalidate: 900 } : undefined
     });
 
     const body = await result.json();
@@ -290,7 +299,8 @@ export async function getCollection(handle: string): Promise<Collection | undefi
     query: getCollectionQuery,
     variables: {
       handle
-    }
+    },
+    cache: 'force-cache'
   });
 
   return reshapeCollection(res.body.data.collection);
@@ -311,7 +321,8 @@ export async function getCollectionProducts({
       handle,
       sortKey,
       reverse
-    }
+    },
+    cache: 'force-cache'
   });
 
   if (!res.body.data.collection) {
@@ -324,7 +335,8 @@ export async function getCollectionProducts({
 
 export async function getCollections(): Promise<Collection[]> {
   const res = await shopifyFetch<ShopifyCollectionsOperation>({
-    query: getCollectionsQuery
+    query: getCollectionsQuery,
+    cache: 'force-cache'
   });
   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
   const collections = [
@@ -352,6 +364,7 @@ export async function getCollections(): Promise<Collection[]> {
 export async function getMenu(handle: string): Promise<Menu[]> {
   const res = await shopifyFetch<ShopifyMenuOperation>({
     query: getMenuQuery,
+    cache: 'force-cache',
     variables: {
       handle
     }
@@ -368,7 +381,8 @@ export async function getMenu(handle: string): Promise<Menu[]> {
 export async function getPage(handle: string): Promise<Page> {
   const res = await shopifyFetch<ShopifyPageOperation>({
     query: getPageQuery,
-    variables: { handle }
+    variables: { handle },
+    cache: 'force-cache'
   });
 
   return res.body.data.pageByHandle;
@@ -376,7 +390,8 @@ export async function getPage(handle: string): Promise<Page> {
 
 export async function getPages(): Promise<Page[]> {
   const res = await shopifyFetch<ShopifyPagesOperation>({
-    query: getPagesQuery
+    query: getPagesQuery,
+    cache: 'force-cache'
   });
 
   return removeEdgesAndNodes(res.body.data.pages);
@@ -387,7 +402,8 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
     query: getProductQuery,
     variables: {
       handle
-    }
+    },
+    cache: 'force-cache'
   });
 
   return reshapeProduct(res.body.data.product, false);
@@ -398,7 +414,8 @@ export async function getProductRecommendations(productId: string): Promise<Prod
     query: getProductRecommendationsQuery,
     variables: {
       productId
-    }
+    },
+    cache: 'force-cache'
   });
 
   return reshapeProducts(res.body.data.productRecommendations);
@@ -419,7 +436,8 @@ export async function getProducts({
       query,
       reverse,
       sortKey
-    }
+    },
+    cache: 'force-cache'
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
@@ -567,6 +585,78 @@ export async function customerAddressCreate({
   });
 
   const gqlResponse = res.body.data.customerAddressCreate;
+
+  if (gqlResponse?.customerUserErrors?.length) {
+    console.log(gqlResponse.customerUserErrors);
+    return false;
+  }
+
+  return true;
+}
+
+export async function customerAddressUpdate({
+  customerAccessToken,
+  address,
+  id
+}: {
+  customerAccessToken: string;
+  address: ShopifyMailingAddressInput;
+  id: string;
+}): Promise<Boolean> {
+  const res = await shopifyFetch<ShopifyCustomerAddressUpdateOperation>({
+    query: customerAddressUpdateMutation,
+    variables: { customerAccessToken, address, id },
+    cache: 'no-store'
+  });
+
+  const gqlResponse = res.body.data.customerAddressUpdate;
+  console.log(gqlResponse);
+
+  if (gqlResponse?.customerUserErrors?.length) {
+    console.log(gqlResponse.customerUserErrors);
+    return false;
+  }
+
+  return true;
+}
+
+export async function customerDefaultAddressUpdate({
+  customerAccessToken,
+  addressId
+}: {
+  customerAccessToken: string;
+  addressId: string;
+}): Promise<Boolean> {
+  const res = await shopifyFetch<ShopifyCustomerDefaultAddressUpdateOperation>({
+    query: customerDefaultAddressUpdateMutation,
+    variables: { customerAccessToken, addressId },
+    cache: 'no-store'
+  });
+
+  const gqlResponse = res.body.data.customerDefaultAddressUpdate;
+
+  if (gqlResponse?.customerUserErrors?.length) {
+    console.log(gqlResponse.customerUserErrors);
+    return false;
+  }
+
+  return true;
+}
+
+export async function customerAddressDelete({
+  customerAccessToken,
+  id
+}: {
+  customerAccessToken: string;
+  id: string;
+}): Promise<Boolean> {
+  const res = await shopifyFetch<ShopifyCustomerAddressDeleteOperation>({
+    query: customerAddressDeleteMutation,
+    variables: { customerAccessToken, id },
+    cache: 'no-store'
+  });
+
+  const gqlResponse = res.body.data.customerAddressDelete;
 
   if (gqlResponse?.customerUserErrors?.length) {
     console.log(gqlResponse.customerUserErrors);

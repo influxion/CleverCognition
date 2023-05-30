@@ -566,3 +566,43 @@ export type ShopifyCustomerAddressCreateOperation = {
     address: ShopifyMailingAddressInput;
   };
 };
+
+export type ShopifyCustomerAddressUpdateOperation = {
+  data: {
+    customerAddressUpdate: {
+      customerAddress: ShopifyMailingAddress;
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+    address: ShopifyMailingAddressInput;
+    id: string;
+  };
+};
+
+export type ShopifyCustomerDefaultAddressUpdateOperation = {
+  data: {
+    customerDefaultAddressUpdate: {
+      customer: ShopifyCustomer;
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+    addressId: string;
+  };
+};
+
+export type ShopifyCustomerAddressDeleteOperation = {
+  data: {
+    customerAddressDelete: {
+      deletedCustomerAddressId: string;
+      customerUserErrors: ShopifyCustomerUserErrors[];
+    };
+  };
+  variables: {
+    customerAccessToken: string;
+    id: string;
+  };
+};

@@ -23,14 +23,21 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.10",
+    "@radix-ui/react-popover": "^1.0.6",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tooltip": "^1.0.6",
     "@vercel/og": "^0.1.0",
+    "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "framer-motion": "^8.4.0",
     "is-empty-iterable": "^3.0.0",
-    "next": "^13.4.1",
+    "lucide-react": "^0.225.0",
+    "next": "^13.4.4",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-spinners": "^0.13.8",
+    "tailwind-merge": "^1.12.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.31.2",

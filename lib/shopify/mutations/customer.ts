@@ -86,3 +86,47 @@ export const customerAddressCreateMutation = /* GraphQL */ `
     }
   }
 `;
+
+export const customerAddressUpdateMutation = /* GraphQL */ `
+  mutation customerAddressUpdate(
+    $address: MailingAddressInput!
+    $customerAccessToken: String!
+    $id: ID!
+  ) {
+    customerAddressUpdate(address: $address, customerAccessToken: $customerAccessToken, id: $id) {
+      customerAddress {
+        id
+      }
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const customerDefaultAddressUpdateMutation = /* GraphQL */ `
+  mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!) {
+    customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
+      customer {
+        id
+      }
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const customerAddressDeleteMutation = /* GraphQL */ `
+  mutation customerAddressDelete($id: ID!, $customerAccessToken: String!) {
+    customerAddressDelete(id: $id, customerAccessToken: $customerAccessToken) {
+      deletedCustomerAddressId
+      customerUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;

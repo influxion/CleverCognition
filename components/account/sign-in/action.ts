@@ -12,7 +12,7 @@ export async function signIn(formData: FormData) {
       password: formData.get('password') as string
     });
 
-    const customer = await getCustomerWithRevalidate(accessToken);
+    const customer = await getCustomerWithRevalidate({accessToken});
 
     if (customer) {
       await linkCustomerToCart(customer);

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import GitHubIcon from 'components/icons/github';
 import LogoIcon from 'components/icons/logo';
 import { getMenu } from 'lib/shopify';
-import { Menu } from "lib/shopify/types/menu";
+import { Menu } from 'lib/shopify/types/menu';
 
 const { SITE_NAME } = process.env;
 
@@ -12,8 +12,10 @@ export default async function Footer() {
   const menu = await getMenu('next-js-frontend-footer-menu');
 
   return (
-    <footer className="border-t border-gray-700 bg-white text-black dark:bg-black dark:text-white">
-      <div className="mx-auto w-full max-w-7xl px-6">
+    <footer className="flex grow flex-col justify-end bg-white text-black dark:bg-black dark:text-white">
+      <div className="w-full border-t border-gray-700">
+
+      <div className="mx-auto h-full w-full max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-8 border-b border-gray-700 py-12 transition-colors duration-150 lg:grid-cols-12">
           <div className="col-span-1 lg:col-span-3">
             <a className="flex flex-initial items-center font-bold md:mr-24" href="/">
@@ -31,7 +33,7 @@ export default async function Footer() {
                     <Link
                       href={item.path}
                       className="text-gray-800 transition duration-150 ease-in-out hover:text-gray-300 dark:text-gray-100"
-                    >
+                      >
                       {item.title}
                     </Link>
                   </li>
@@ -54,6 +56,7 @@ export default async function Footer() {
           </div>
         </div>
       </div>
+          </div>
     </footer>
   );
 }

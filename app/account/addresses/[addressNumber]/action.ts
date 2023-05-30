@@ -30,22 +30,8 @@ export async function updateAddress(formData: FormData) {
   } catch (e: any) {
     return new Error(e[0]);
   }
-  revalidatePath('/account/addresses');
-  redirect('/account/addresses');
-}
-
-export async function updateDefaultAddress(formData: FormData) {
-  try {
-    const accessToken = await getAccessToken();
-    await customerDefaultAddressUpdate({
-      customerAccessToken: accessToken || '',
-      addressId: formData.get('id') as string
-    });
-  } catch (e: any) {
-    return new Error(e[0]);
-  }
+  revalidatePath(`/account/addresses/${formData.get('address-number')}')}`);
   revalidatePath(`/account/addresses`);
-  redirect('/account/addresses');
 }
 
 export async function deleteAddress(formData: FormData) {

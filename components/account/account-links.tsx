@@ -1,3 +1,4 @@
+import RevalidateLink from 'components/global/revalidate-link';
 import { Customer } from 'lib/shopify/types/customer';
 import Link from 'next/link';
 
@@ -19,7 +20,7 @@ export default function AccountLinks({
 
 export function AccountOrdersLink({ customer }: { customer: Customer }) {
   return customer.numberOfOrders > 0 ? (
-    <Link
+    <RevalidateLink
       href="/account/orders"
       className="flex flex-col gap-4 rounded border p-6 outline-1 hover:outline focus:outline"
     >
@@ -31,7 +32,7 @@ export function AccountOrdersLink({ customer }: { customer: Customer }) {
           {customer.numberOfOrders == 1 ? '' : 's'}.
         </p>
       ) : null}
-    </Link>
+    </RevalidateLink>
   ) : (
     <div className="flex flex-col gap-4 rounded border p-6 outline-1 hover:outline focus:outline">
       <h4 className="text-xl font-bold ">Orders</h4>
@@ -48,7 +49,7 @@ export function AccountOrdersLink({ customer }: { customer: Customer }) {
 
 export function AccountAddressesLink({ customer }: { customer: Customer }) {
   return (
-    <Link
+    <RevalidateLink
       href="/account/addresses"
       className="flex flex-col gap-4 rounded border p-6 outline-1 hover:outline focus:outline"
     >
@@ -66,6 +67,6 @@ export function AccountAddressesLink({ customer }: { customer: Customer }) {
           ) : null}
         </div>
       ) : null}
-    </Link>
+    </RevalidateLink>
   );
 }

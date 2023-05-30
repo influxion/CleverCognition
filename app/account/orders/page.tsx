@@ -6,6 +6,8 @@ export default async function AccountOrdersPage() {
   const customer = await getCustomerWithRevalidate();
 
   if (!customer) return redirect('/account');
+
+  console.log(customer.orders)
   return (
     <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">
       <BackButton href="/account">Account</BackButton>

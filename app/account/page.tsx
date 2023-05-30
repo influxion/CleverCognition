@@ -11,15 +11,17 @@ export default async function AccountPage() {
   if (!customer) return <AccountSignIn />;
 
   return (
-    <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">
-      <h2 className="mb-8 w-full text-center text-4xl">Your Account</h2>
-      <div className="flex w-full flex-col gap-4 lg:flex-row">
-        <AccountDetails customer={customer} />
-        <AccountLinks customer={customer}>
-          {/* @ts-expect-error Server Component */}
-          <SignOutButton />
-        </AccountLinks>
+    <Suspense>
+      <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">
+        <h2 className="mb-8 w-full text-center text-4xl">Your Account</h2>
+        <div className="flex w-full flex-col gap-4 lg:flex-row">
+          <AccountDetails customer={customer} />
+          <AccountLinks customer={customer}>
+            {/* @ts-expect-error Server Component */}
+            <SignOutButton />
+          </AccountLinks>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }

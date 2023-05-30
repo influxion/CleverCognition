@@ -1,12 +1,15 @@
 import { getCustomerWithRevalidate } from 'app/action';
 import BackButton from 'components/global/back-button';
+import RevalidateLink from 'components/global/revalidate-link';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function AccountAddressesPage() {
-  const customer = await getCustomerWithRevalidate({ path: '/account/addresses' });
+  const customer = await getCustomerWithRevalidate();
+  console.log('test2');
 
   if (!customer) return redirect('/account');
+
   return (
     <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">
       <BackButton href="/account">Account</BackButton>
@@ -15,7 +18,7 @@ export default async function AccountAddressesPage() {
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         {customer.addresses.length
           ? customer.addresses.map((address, i) => (
-              <Link
+              <RevalidateLink
                 href={`/account/addresses/${i}`}
                 className="relative flex flex-col gap-1 rounded border p-6 outline-1 hover:outline focus:outline"
               >
@@ -29,7 +32,7 @@ export default async function AccountAddressesPage() {
                 {address.address2 ? <p>{address.address2}</p> : null}
                 {address.zip ? <p>{address.zip}</p> : null}
                 {address.formattedArea ? <p>{address.formattedArea}</p> : null}
-              </Link>
+              </RevalidateLink>
             ))
           : null}
         <Link

@@ -1,6 +1,7 @@
+'use client';
 import { cn } from 'lib/utils';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { action } from './action';
 
 export default function RevalidateLink({
   href,
@@ -11,13 +12,15 @@ export default function RevalidateLink({
   className?: string;
   children: React.ReactNode;
 }) {
-  async function action() {
-    'use server';
-    revalidatePath(href);
-    redirect(href);
-  }
+  const router = useRouter();
   return (
-    <form action={action} className="w-full">
+    <form
+      action={async () => {
+        await action(href);
+        router.push(href);
+      }}
+      className="w-full"
+    >
       <button type="submit" className={cn(className, 'w-full text-left')}>
         {children}
       </button>

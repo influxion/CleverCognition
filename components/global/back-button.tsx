@@ -1,9 +1,8 @@
-'use client';
 import CaretLeftIcon from 'components/icons/caret-left';
 import Link from 'next/link';
 import { Button } from 'components/ui/button';
-import { action } from './action';
-import { useRouter } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export default function BackButton({
   href,
@@ -14,7 +13,11 @@ export default function BackButton({
   children: React.ReactNode;
   noRevalidate?: boolean;
 }) {
-  const router = useRouter();
+  async function action() {
+    'use server';
+    revalidatePath(href);
+    redirect(href);
+  }
   if (noRevalidate)
     return (
       <Link href={href}>
@@ -25,13 +28,7 @@ export default function BackButton({
       </Link>
     );
   return (
-    <form
-      action={async () => {
-        await action(href);
-        router.push(href);
-      }}
-      className="w-full"
-    >
+    <form action={action}>
       <Button className="flex w-fit items-center pl-2" type="submit">
         <CaretLeftIcon className="h-6" />
         {children}

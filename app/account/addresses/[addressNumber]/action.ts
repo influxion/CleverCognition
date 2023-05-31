@@ -30,8 +30,7 @@ export async function updateAddress(formData: FormData) {
   } catch (e: any) {
     return new Error(e[0]);
   }
-  revalidatePath(`/account/addresses/${formData.get('address-number')}')}`);
-  revalidatePath(`/account/addresses`);
+  // revalidatePath(`/account/addresses/${formData.get('address-number')}')}`);
 }
 
 export async function deleteAddress(formData: FormData) {
@@ -58,5 +57,4 @@ export async function updateDefaultAddress(formData: FormData) {
   } catch (e: any) {
     return new Error(e[0]);
   }
-  revalidatePath(`/account/addresses`);
 }

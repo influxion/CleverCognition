@@ -1,9 +1,13 @@
 import { Input } from 'components/ui/input';
 import Link from 'next/link';
 import { signIn } from './action';
-import SubmitButton from '../../global/submit-button';
+import SubmitButton from 'components/global/submit-button';
+import { getAuthedStatus } from 'app/action';
+import { redirect } from 'next/navigation';
 
-export default function AccountSignIn() {
+export default async function SignInPage() {
+  const authed = await getAuthedStatus();
+  if (authed) redirect('/account');
   return (
     <>
       <div className="mx-auto my-20 flex min-h-[50vh] max-w-7xl flex-col md:flex-row">

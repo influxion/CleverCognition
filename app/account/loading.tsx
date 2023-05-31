@@ -1,5 +1,4 @@
 import { getCookie } from 'utils/cookie';
-import { getAccessToken } from '../action';
 
 export default function Loading() {
   const accessToken = getCookie('accessToken');

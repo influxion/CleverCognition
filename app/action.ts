@@ -1,8 +1,9 @@
 'use server';
 
-import { getCustomer, renewAccessToken, updateBuyerIdentity } from 'lib/shopify';
+import { deleteAccessToken, getCustomer, renewAccessToken, updateBuyerIdentity } from 'lib/shopify';
 import { Customer } from 'lib/shopify/types/customer';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { getCookie, setCookie } from 'utils/cookie';
 
 export async function getAccessToken() {
@@ -30,15 +31,50 @@ export async function getCustomerWithRevalidate({
     accessToken = await getAccessToken();
   }
 
-  if (!accessToken) return null;
+  if (!accessToken) redirect('/account/sign-in');
 
   const customer = await getCustomer(accessToken);
+
+  if (!customer) {
+    await signOut();
+    redirect('/account/sign-in');
+  }
 
   if (path) {
     revalidatePath(path);
   }
 
   return customer;
+}
+
+export async function getCustomerSafe({ accessToken }: { accessToken?: string } = {}) {
+  if (!accessToken) {
+    accessToken = await getAccessToken();
+  }
+  if (!accessToken) return null;
+  return await getCustomer(accessToken);
+}
+
+export async function getAuthedStatus() {
+  const accessToken = await getAccessToken();
+  if (!accessToken) return false;
+  const customer = await getCustomer(accessToken);
+  if (!customer) return false;
+  return true;
+}
+
+export async function signOut() {
+  const accessToken = await getAccessToken();
+  setCookie('accessToken', '');
+  setCookie('expiresAt', '');
+  try {
+    await deleteAccessToken(accessToken || '');
+    await unlinkCustomerFromCart();
+
+  } catch (e) {
+    console.log(e);
+  }
+  redirect('/account/sign-in');
 }
 
 export async function linkCustomerToCart(customer: Customer, cartId: string = '') {
@@ -54,6 +90,38 @@ export async function linkCustomerToCart(customer: Customer, cartId: string = ''
       customerAccessToken: accessToken,
       phone: customer.phone,
       countryCode: customer.defaultAddress?.countryCodeV2
+    }
+  });
+}
+
+export async function unlinkCustomerFromCart() {
+  let cartId = getCookie('cartId')!;
+
+  if (!cartId) return;
+  await updateBuyerIdentity({
+    cartId,
+    buyerIdentity: {
+      countryCode: undefined,
+      customerAccessToken: undefined,
+      deliveryAddressPreferences: [
+        {
+          customerAddressId: undefined,
+          deliveryAddress: {
+            address1: undefined,
+            address2: undefined,
+            city: undefined,
+            company: undefined,
+            country: 'CA',
+            firstName: undefined,
+            lastName: undefined,
+            phone: undefined,
+            province: undefined,
+            zip: undefined
+          }
+        }
+      ],
+      email: undefined,
+      phone: undefined
     }
   });
 }

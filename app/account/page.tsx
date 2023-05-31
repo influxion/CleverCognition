@@ -1,4 +1,3 @@
-import AccountSignIn from 'components/account/sign-in/index';
 import { getCustomerWithRevalidate } from 'app/action';
 import AccountDetails from '../../components/account/account-details';
 import AccountLinks from 'components/account/account-links';
@@ -7,8 +6,6 @@ import { Suspense } from 'react';
 
 export default async function AccountPage() {
   const customer = await getCustomerWithRevalidate();
-
-  if (!customer) return <AccountSignIn />;
 
   return (
     <Suspense>

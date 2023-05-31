@@ -9,7 +9,6 @@ import { Suspense } from 'react';
 export default async function AddAddressPage() {
   const customer = await getCustomerWithRevalidate();
 
-  if (!customer) return redirect('/account');
   return (
     <Suspense>
       <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">

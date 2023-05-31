@@ -1,12 +1,12 @@
 'use server';
 
-import { getCustomerWithRevalidate, linkCustomerToCart } from 'app/action';
+import { getCustomerSafe, linkCustomerToCart } from 'app/action';
 import { createCart, getCart } from 'lib/shopify';
 import { getCookie } from 'utils/cookie';
 
 export async function getCartWithCustomer() {
   const cartId = getCookie('cartId');
-  const customer = await getCustomerWithRevalidate();
+  const customer = await getCustomerSafe();
   let cart;
   let cartIdUpdated = false;
 

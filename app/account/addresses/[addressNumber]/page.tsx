@@ -16,8 +16,6 @@ export default async function EditAddressPage({
 }) {
   const customer = await getCustomerWithRevalidate();
 
-  if (!customer) return redirect('/account');
-
   const address = customer.addresses[+addressNumber];
 
   if (!address) return redirect('/account/addresses');

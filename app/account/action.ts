@@ -1,4 +1,5 @@
 'use server';
+import { revalidate } from 'app/[page]/page';
 import { getAccessToken } from 'app/action';
 import { customerUpdate, deleteAccessToken, updateBuyerIdentity } from 'lib/shopify';
 import { revalidatePath } from 'next/cache';
@@ -46,10 +47,22 @@ export async function updateAccountPassword(formData: FormData) {
       customerAccessToken: accessToken || ''
     });
 
-    if (ok) {
-      revalidatePath('/account');
-    }
+    if (ok)
+      return {
+        data: true,
+        error: null,
+        revalidate: '/account/sign-in'
+      };
+
+    return {
+      data: null,
+      error: true
+    };
   } catch (e) {
     console.log(e);
+    return {
+      data: null,
+      error: e
+    };
   }
 }

@@ -26,7 +26,6 @@ export async function getCustomerWithRevalidate({
   accessToken?: string;
   path?: string;
 } = {}) {
-  console.log('validating');
   if (!accessToken) {
     accessToken = await getAccessToken();
   }

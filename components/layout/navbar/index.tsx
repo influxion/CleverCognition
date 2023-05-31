@@ -8,11 +8,9 @@ import { getMenu } from 'lib/shopify';
 import { Menu } from 'lib/shopify/types/menu';
 import MobileMenu from './mobile-menu';
 import Search from './search';
-import { getAuthedStatus } from 'app/action';
 
 export default async function Navbar() {
   const menu = await getMenu('next-js-frontend-header-menu');
-  const authed = await getAuthedStatus();
 
   return (
     <nav className="relative flex items-center justify-between gap-4 bg-white p-4 dark:bg-black lg:px-6">

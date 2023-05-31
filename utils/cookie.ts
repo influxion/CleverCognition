@@ -6,8 +6,12 @@ export function getCookie(name: string) {
   return cookie?.value;
 }
 
+export function deleteCookie(name: string) {
+  return cookies().delete(name);
+}
+
 export function setCookie(name: string, value: string) {
-  cookies().set(name, value, {
+  return cookies().set(name, value, {
     path: '/',
     sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',

@@ -4,17 +4,16 @@ import { deleteAccessToken, getCustomer, renewAccessToken, updateBuyerIdentity }
 import { Customer } from 'lib/shopify/types/customer';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { getCookie, setCookie } from 'utils/cookie';
+import { deleteCookie, getCookie, setCookie } from 'utils/cookie';
 
 export async function getAccessToken() {
-  const accessToken = getCookie('accessToken');
+  let accessToken = getCookie('accessToken');
   const expiresAt = getCookie('expiresAt');
 
-  if (!accessToken || !expiresAt) return undefined;
+  if (!accessToken || !expiresAt) return;
 
   if (expiresAt ? new Date(expiresAt) < new Date() : false) {
-    await refreshToken(accessToken);
-    return undefined;
+    accessToken = await refreshToken(accessToken);
   }
 
   return accessToken;
@@ -65,12 +64,11 @@ export async function getAuthedStatus() {
 
 export async function signOut() {
   const accessToken = await getAccessToken();
-  setCookie('accessToken', '');
-  setCookie('expiresAt', '');
+  deleteCookie('accessToken');
+  deleteCookie('expiresAt');
   try {
     await deleteAccessToken(accessToken || '');
     await unlinkCustomerFromCart();
-
   } catch (e) {
     console.log(e);
   }
@@ -134,6 +132,7 @@ export async function refreshToken(customerAccessToken: string) {
     setCookie('expiresAt', expiresAt.toString());
 
     revalidatePath('/account');
+    return accessToken;
   } catch (e) {
     console.log(e);
   }

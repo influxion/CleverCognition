@@ -5,8 +5,8 @@ import { TooltipProvider, TooltipTrigger, Tooltip, TooltipContent } from 'compon
 import SubmitButton from 'components/global/submit-button';
 import { Home } from 'lucide-react';
 import { Input } from 'components/ui/input';
-import { updateDefaultAddress } from './action';
 import { Customer } from 'lib/shopify/types/customer';
+import { updateDefaultAddress } from 'app/account/addresses/[addressNumber]/action';
 
 export function DefaultAddressButton({ address, customer }: { address: any; customer: Customer }) {
   const [optimisticStatus, setOptimisticStatus] = useOptimistic(

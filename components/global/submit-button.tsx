@@ -1,6 +1,7 @@
 'use client';
 import { Button } from 'components/ui/button';
 import { cn } from 'lib/utils';
+import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import { ClipLoader } from 'react-spinners';
@@ -10,35 +11,26 @@ export default function SubmitButton({
   className,
   hideChild,
   disabled,
+  varient,
   ...props
 }: {
   children: React.ReactNode;
   className?: string;
   hideChild?: boolean;
   disabled?: boolean;
+  varient?: 'destructive' | 'secondary' | 'outline' | 'ghost' | 'link';
   props?: any;
 }) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const { pending } = useFormStatus();
-  useEffect(() => {
-    setIsDarkMode(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }, []);
   return (
     <Button
       type="submit"
       disabled={pending || disabled}
+      variant={varient || undefined}
       className={cn(className, 'flex items-center justify-center gap-2')}
       {...props}
     >
-      {pending ? (
-        <ClipLoader
-          loading={true}
-          size={18}
-          color={isDarkMode ? '#fff' : '#000'}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      ) : null}{' '}
+      {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{' '}
       {pending && hideChild ? null : children}
     </Button>
   );

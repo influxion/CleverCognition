@@ -9,10 +9,6 @@ export default function NotificationCenter() {
   const [toggle, setToggle] = useState(false);
   const [cookies] = useCookies(['token', 'cardId']);
 
-  useEffect(() => {
-    console.log(cookies);
-  }, [cookies]);
-
   return toggle ? (
     <div className="absolute right-1/2 top-4 m-auto w-screen translate-x-1/2 px-4 md:max-w-xl">
       <Alert variant="destructive">

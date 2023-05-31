@@ -371,8 +371,8 @@ export type ShopifyOrder = {
 };
 
 export type MoneyV2 = {
-  key: string;
-  value?: string;
+  amount: string;
+  currencyCode?: string;
 };
 
 export type PricingPercentageValue = {

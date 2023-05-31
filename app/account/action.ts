@@ -25,10 +25,25 @@ export async function updateAccount(formData: FormData) {
         firstName: formData.get('first-name') as string,
         lastName: formData.get('last-name') as string,
         email: formData.get('email') as string,
-        password: (formData.get('password') as string)
-          ? (formData.get('password') as string)
-          : undefined,
         acceptsMarketing: !!formData.get('accepts-marketing')
+      },
+      customerAccessToken: accessToken || ''
+    });
+
+    if (ok) {
+      revalidatePath('/account');
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function updateAccountPassword(formData: FormData) {
+  const accessToken = await getAccessToken();
+  try {
+    const ok = await customerUpdate({
+      customer: {
+        password: formData.get('password') ? (formData.get('password') as string) : undefined
       },
       customerAccessToken: accessToken || ''
     });

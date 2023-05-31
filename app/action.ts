@@ -26,6 +26,7 @@ export async function getCustomerWithRevalidate({
   accessToken?: string;
   path?: string;
 } = {}) {
+  console.log('validating');
   if (!accessToken) {
     accessToken = await getAccessToken();
   }
@@ -136,4 +137,8 @@ export async function refreshToken(customerAccessToken: string) {
   } catch (e) {
     console.log(e);
   }
+}
+
+export async function redirectAction(href: string) {
+  redirect(href);
 }

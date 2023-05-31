@@ -17,11 +17,22 @@ export async function updateAccount(formData: FormData) {
       customerAccessToken: accessToken || ''
     });
 
-    if (ok) {
-      revalidatePath('/account');
-    }
+    if (ok)
+      return {
+        data: true,
+        error: null
+      };
+
+    return {
+      data: null,
+      error: true
+    };
   } catch (e) {
     console.log(e);
+    return {
+      data: null,
+      error: e
+    };
   }
 }
 

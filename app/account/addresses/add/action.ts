@@ -1,13 +1,11 @@
 'use server';
 import { getAccessToken } from 'app/action';
 import { customerAddressCreate } from 'lib/shopify';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 export async function createAddress(formData: FormData) {
   try {
     const accessToken = await getAccessToken();
-    await customerAddressCreate({
+    const ok = await customerAddressCreate({
       customerAccessToken: accessToken || '',
       address: {
         address1: formData.get('address1') as string,
@@ -20,12 +18,24 @@ export async function createAddress(formData: FormData) {
         phone: formData.get('phone') as string,
         province: formData.get('province') as string,
         zip: formData.get('zip') as string
-      },
+      }
     });
-  } catch (e: any) {
+    if (ok)
+      return {
+        data: true,
+        error: null,
+        redirect: '/account/addresses'
+      };
+
+    return {
+      data: null,
+      error: true
+    };
+  } catch (e) {
     console.log(e);
-    return new Error(e);
+    return {
+      data: null,
+      error: e
+    };
   }
-  revalidatePath(`/account/addresses`);
-  redirect('/account/addresses');
 }

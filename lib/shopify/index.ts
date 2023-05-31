@@ -614,7 +614,6 @@ export async function customerAddressUpdate({
   });
 
   const gqlResponse = res.body.data.customerAddressUpdate;
-  console.log(gqlResponse);
 
   if (gqlResponse?.customerUserErrors?.length) {
     console.log(gqlResponse.customerUserErrors);

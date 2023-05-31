@@ -11,7 +11,7 @@ import { redirect } from 'next/navigation';
 export async function updateAddress(formData: FormData) {
   try {
     const accessToken = await getAccessToken();
-    await customerAddressUpdate({
+    const ok = await customerAddressUpdate({
       customerAccessToken: accessToken || '',
       address: {
         address1: formData.get('address1') as string,
@@ -27,10 +27,23 @@ export async function updateAddress(formData: FormData) {
       },
       id: formData.get('id') as string
     });
-  } catch (e: any) {
-    return new Error(e[0]);
+    if (ok)
+      return {
+        data: true,
+        error: null
+      };
+
+    return {
+      data: null,
+      error: true
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      data: null,
+      error: e
+    };
   }
-  // revalidatePath(`/account/addresses/${formData.get('address-number')}')}`);
 }
 
 export async function deleteAddress(formData: FormData) {

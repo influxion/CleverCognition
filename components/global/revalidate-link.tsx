@@ -1,5 +1,5 @@
+import { redirectAction } from 'app/action';
 import { cn } from 'lib/utils';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export default function RevalidateLink({
@@ -11,13 +11,14 @@ export default function RevalidateLink({
   className?: string;
   children: React.ReactNode;
 }) {
-  async function action() {
-    'use server';
-    revalidatePath(href);
-    redirect(href);
-  }
   return (
-    <form action={action} className="w-full">
+    <form
+      action={async () => {
+        'use server';
+        await redirectAction(href);
+      }}
+      className="w-full"
+    >
       <button type="submit" className={cn(className, 'w-full text-left')}>
         {children}
       </button>

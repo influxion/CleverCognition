@@ -1,8 +1,8 @@
 'use server';
 import { getAccessToken } from 'app/action';
-import { customerUpdate, deleteAccessToken } from 'lib/shopify';
+import { customerUpdate, deleteAccessToken, updateBuyerIdentity } from 'lib/shopify';
 import { revalidatePath } from 'next/cache';
-import { setCookie } from 'utils/cookie';
+import { getCookie, setCookie } from 'utils/cookie';
 
 export async function signOut() {
   const accessToken = await getAccessToken();
@@ -10,11 +10,44 @@ export async function signOut() {
   setCookie('expiresAt', '');
   try {
     await deleteAccessToken(accessToken || '');
+    await unlinkCustomerFromCart();
 
     revalidatePath('/account');
   } catch (e) {
     console.log(e);
   }
+}
+
+export async function unlinkCustomerFromCart() {
+  let cartId = getCookie('cartId')!;
+
+  if (!cartId) return;
+  await updateBuyerIdentity({
+    cartId,
+    buyerIdentity: {
+      countryCode: undefined,
+      customerAccessToken: undefined,
+      deliveryAddressPreferences: [
+        {
+          customerAddressId: undefined,
+          deliveryAddress: {
+            address1: undefined,
+            address2: undefined,
+            city: undefined,
+            company: undefined,
+            country: 'CA',
+            firstName: undefined,
+            lastName: undefined,
+            phone: undefined,
+            province: undefined,
+            zip: undefined
+          }
+        }
+      ],
+      email: undefined,
+      phone: undefined
+    }
+  });
 }
 
 export async function updateAccount(formData: FormData) {

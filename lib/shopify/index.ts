@@ -527,6 +527,7 @@ export async function updateBuyerIdentity({
     variables: { cartId, buyerIdentity },
     cache: 'no-store'
   });
+  console.log(res.body.data)
 
   if (!res.body.data.cart) {
     return null;

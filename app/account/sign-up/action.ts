@@ -1,11 +1,10 @@
 'use server';
 
 import { createCustomer } from 'lib/shopify';
-import { redirect } from 'next/navigation';
 
 export async function signUp(formData: FormData) {
   try {
-    await createCustomer({
+    const customer = await createCustomer({
       firstName: (formData.get('firstname') as string) || null,
       lastName: (formData.get('lastname') as string) || null,
       email: formData.get('new-email') as string,
@@ -13,8 +12,13 @@ export async function signUp(formData: FormData) {
       phone: (formData.get('phone-number') as string) || null,
       acceptsMarketing: !!formData.get('accepts-marketing')
     });
-  } catch (e: any) {
-    return new Error(e[0].message);
+    if (customer) {
+      return { data: true, error: null, redirect: '/account' };
+    } else {
+      return { data: null, error: true };
+    }
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: true };
   }
-  redirect('/account');
 }

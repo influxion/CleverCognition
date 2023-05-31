@@ -2,8 +2,6 @@
 
 import { getCustomerWithRevalidate, linkCustomerToCart } from 'app/action';
 import { createAccessToken } from 'lib/shopify';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { setCookie } from 'utils/cookie';
 
 export async function signIn(formData: FormData) {
@@ -21,8 +19,14 @@ export async function signIn(formData: FormData) {
 
     setCookie('accessToken', accessToken);
     setCookie('expiresAt', expiresAt.toString());
+
+    if (customer) {
+      return { data: true, error: null, redirect: '/account' };
+    } else {
+      return { data: null, error: true };
+    }
   } catch (e) {
     console.log(e);
+    return { data: null, error: true };
   }
-  redirect('/account');
 }

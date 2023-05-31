@@ -1,32 +1,17 @@
-import { Input } from 'components/ui/input';
 import Link from 'next/link';
-import { signIn } from './action';
-import SubmitButton from 'components/global/submit-button';
 import { getAuthedStatus } from 'app/action';
 import { redirect } from 'next/navigation';
+import SignInForm from '../../../components/account/sign-in/sign-in-form';
 
 export default async function SignInPage() {
   const authed = await getAuthedStatus();
   if (authed) redirect('/account');
+
   return (
     <>
       <div className="mx-auto my-20 flex min-h-[50vh] max-w-7xl flex-col md:flex-row">
-        <form
-          action={signIn}
-          className="flex w-full flex-col justify-center gap-4 border-b p-4 py-12 md:border-b-0 md:border-r md:p-12"
-        >
-          <h3 className="mb-8 text-center text-4xl">Sign In</h3>
-
-          <Input type="email" name="email" placeholder="Email" />
-          <Input type="password" name="password" placeholder="Password" className="w-full" />
-          <div className="w-full">
-            <Link href="/account/reset" className="mt-1 block text-sm font-medium">
-              Forgot password?
-            </Link>
-          </div>
-
-          <SubmitButton className="mt-8">Sign In</SubmitButton>
-        </form>
+        {/* @ts-expect-error */}
+        <SignInForm />
         <div className="flex w-full flex-col items-center justify-center gap-12 p-4 py-12 md:p-12">
           <h5 className="text-center text-4xl">Not a user?</h5>
           <Link

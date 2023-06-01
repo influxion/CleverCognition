@@ -1,26 +1,22 @@
-import { ImageResponse } from '@vercel/og';
-import { NextRequest } from 'next/server';
-
-export const runtime = 'edge';
-
-const interRegular = fetch(new URL('./Inter-Regular.ttf', import.meta.url)).then((res) =>
-  res.arrayBuffer()
+import { ImageResponse } from "@vercel/og";
+import { NextRequest } from "next/server";
+export const runtime = "edge";
+const interRegular = fetch(
+  new URL("./Inter-Regular.ttf", import.meta.url)
+).then((res) => res.arrayBuffer());
+const interBold = fetch(new URL("./Inter-Bold.ttf", import.meta.url)).then(
+  (res) => res.arrayBuffer()
 );
-
-const interBold = fetch(new URL('./Inter-Bold.ttf', import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
-
 export async function GET(req: NextRequest): Promise<Response | ImageResponse> {
   try {
-    const [regularFont, boldFont] = await Promise.all([interRegular, interBold]);
-
+    const [regularFont, boldFont] = await Promise.all([
+      interRegular,
+      interBold,
+    ]);
     const { searchParams } = new URL(req.url);
-
-    const title = searchParams.has('title')
-      ? searchParams.get('title')?.slice(0, 100)
+    const title = searchParams.has("title")
+      ? searchParams.get("title")?.slice(0, 100)
       : process.env.SITE_NAME;
-
     return new ImageResponse(
       (
         <div tw="flex h-full w-full flex-col items-center justify-center bg-black">
@@ -42,26 +38,25 @@ export async function GET(req: NextRequest): Promise<Response | ImageResponse> {
         height: 630,
         fonts: [
           {
-            name: 'Inter',
+            name: "Inter",
             data: regularFont,
-            style: 'normal',
-            weight: 400
+            style: "normal",
+            weight: 400,
           },
           {
-            name: 'Inter',
+            name: "Inter",
             data: boldFont,
-            style: 'normal',
-            weight: 700
-          }
-        ]
+            style: "normal",
+            weight: 700,
+          },
+        ],
       }
     );
   } catch (e) {
     if (!(e instanceof Error)) throw e;
-
     console.log(e.message);
     return new Response(`Failed to generate the image`, {
-      status: 500
+      status: 500,
     });
   }
 }

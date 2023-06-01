@@ -1,7 +1,9 @@
+'use client';
 import CaretLeftIcon from 'components/icons/caret-left';
 import Link from 'next/link';
 import { Button } from 'components/ui/button';
 import { redirectAction } from 'app/action';
+import { useTransition } from 'react';
 
 export default function BackButton({
   href,
@@ -12,6 +14,7 @@ export default function BackButton({
   children: React.ReactNode;
   noRevalidate?: boolean;
 }) {
+  let [isPending, startTransition] = useTransition();
   if (noRevalidate)
     return (
       <Link href={href}>
@@ -22,16 +25,12 @@ export default function BackButton({
       </Link>
     );
   return (
-    <form
-      action={async () => {
-        'use server';
-        await redirectAction(href);
-      }}
+    <Button
+      className="flex w-fit items-center pl-2"
+      onClick={() => startTransition(() => redirectAction(href))}
     >
-      <Button className="flex w-fit items-center pl-2" type="submit">
-        <CaretLeftIcon className="h-6" />
-        {children}
-      </Button>
-    </form>
+      <CaretLeftIcon className="h-6" />
+      {children}
+    </Button>
   );
 }

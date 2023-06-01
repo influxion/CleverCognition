@@ -1,6 +1,9 @@
+'use client';
 import { redirectAction } from 'app/action';
+import { Button } from 'components/ui/button';
 import { cn } from 'lib/utils';
 import { redirect } from 'next/navigation';
+import { useTransition } from 'react';
 
 export default function RevalidateLink({
   href,
@@ -11,17 +14,13 @@ export default function RevalidateLink({
   className?: string;
   children: React.ReactNode;
 }) {
+  let [isPending, startTransition] = useTransition();
   return (
-    <form
-      action={async () => {
-        'use server';
-        await redirectAction(href);
-      }}
-      className="w-full"
+    <button
+      className={cn(className, 'w-full text-left')}
+      onClick={() => startTransition(() => redirectAction(href))}
     >
-      <button type="submit" className={cn(className, 'w-full text-left')}>
-        {children}
-      </button>
-    </form>
+      {children}
+    </button>
   );
 }

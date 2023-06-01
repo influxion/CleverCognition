@@ -36,8 +36,6 @@ export async function getCustomerWithRevalidate({
 
   if (!customer) {
     await unlinkCustomerFromCart();
-    deleteCookie('accessToken');
-    deleteCookie('expiresAt');
     redirect('/account/sign-in');
   }
 

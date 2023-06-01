@@ -1,22 +1,22 @@
 import {
   HIDDEN_PRODUCT_TAG,
   SHOPIFY_GRAPHQL_API_ENDPOINT,
-} from '@/lib/constants';
-import { isShopifyError } from '@/lib/type-guards';
+} from "@/lib/constants";
+import { isShopifyError } from "@/lib/type-guards";
 import {
   addToCartMutation,
   createCartMutation,
   editCartItemsMutation,
   removeFromCartMutation,
   updateBuyerIdentityMutation,
-} from './mutations/cart';
-import { getCartQuery } from './queries/cart';
+} from "./mutations/cart";
+import { getCartQuery } from "./queries/cart";
 import {
   getCollectionProductsQuery,
   getCollectionQuery,
   getCollectionsQuery,
-} from './queries/collection';
-import { getCustomerQuery } from './queries/customer';
+} from "./queries/collection";
+import { getCustomerQuery } from "./queries/customer";
 import {
   createAccessTokenMutation,
   createCustomerMutation,
@@ -28,35 +28,35 @@ import {
   customerUpdateMutation,
   deleteAccessTokenMutation,
   renewAccessTokenMutation,
-} from './mutations/customer';
-import { getMenuQuery } from './queries/menu';
-import { getPageQuery, getPagesQuery } from './queries/page';
+} from "./mutations/customer";
+import { getMenuQuery } from "./queries/menu";
+import { getPageQuery, getPagesQuery } from "./queries/page";
 import {
   getProductQuery,
   getProductRecommendationsQuery,
   getProductsQuery,
-} from './queries/product';
-import { Connection } from './types/__global';
-import { Menu, ShopifyMenuOperation } from './types/menu';
+} from "./queries/product";
+import { Connection } from "./types/__global";
+import { Menu, ShopifyMenuOperation } from "./types/menu";
 import {
   Collection,
   ShopifyCollection,
   ShopifyCollectionOperation,
   ShopifyCollectionProductsOperation,
   ShopifyCollectionsOperation,
-} from './types/collection';
+} from "./types/collection";
 import {
   Page,
   ShopifyPageOperation,
   ShopifyPagesOperation,
-} from './types/page';
+} from "./types/page";
 import {
   Product,
   ShopifyProduct,
   ShopifyProductOperation,
   ShopifyProductRecommendationsOperation,
   ShopifyProductsOperation,
-} from './types/product';
+} from "./types/product";
 import {
   Cart,
   ShopifyAddToCartOperation,
@@ -65,7 +65,7 @@ import {
   ShopifyCreateCartOperation,
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation,
-} from './types/cart';
+} from "./types/cart";
 import {
   Customer,
   ShopifCustomerRecoverOperation,
@@ -87,15 +87,15 @@ import {
   ShopifyCustomerUpdateOperation,
   ShopifyMailingAddressInput,
   ShopifyUpdateBuyerIdentityOperation,
-} from './types/customer';
-import { setCookie } from '@/utils/cookie';
+} from "./types/customer";
+import { setCookie } from "@/utils/cookie";
 
 const domain = `https://${process.env.SHOPIFY_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
 const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 
 type ExtractVariables<T> = T extends { variables: object }
-  ? T['variables']
+  ? T["variables"]
   : never;
 
 export async function shopifyFetch<T>({
@@ -113,10 +113,10 @@ export async function shopifyFetch<T>({
 }): Promise<{ status: number; body: T } | never> {
   try {
     const result = await fetch(endpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': key,
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": key,
         ...headers,
       },
       body: JSON.stringify({
@@ -160,8 +160,8 @@ const removeEdgesAndNodes = (array: Connection<any>) => {
 const reshapeCart = (cart: ShopifyCart): Cart => {
   if (!cart.cost?.totalTaxAmount) {
     cart.cost.totalTaxAmount = {
-      amount: '0.0',
-      currencyCode: 'USD',
+      amount: "0.0",
+      currencyCode: "USD",
     };
   }
 
@@ -247,7 +247,7 @@ const reshapeCustomer = (customer: ShopifyCustomer) => {
 export async function createCart(): Promise<Cart> {
   const res = await shopifyFetch<ShopifyCreateCartOperation>({
     query: createCartMutation,
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   return reshapeCart(res.body.data.cartCreate.cart);
@@ -263,7 +263,7 @@ export async function addToCart(
       cartId,
       lines,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
   return reshapeCart(res.body.data.cartLinesAdd.cart);
 }
@@ -278,7 +278,7 @@ export async function removeFromCart(
       cartId,
       lineIds,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   return reshapeCart(res.body.data.cartLinesRemove.cart);
@@ -294,7 +294,7 @@ export async function updateCart(
       cartId,
       lines,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   return reshapeCart(res.body.data.cartLinesUpdate.cart);
@@ -304,7 +304,7 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   const res = await shopifyFetch<ShopifyCartOperation>({
     query: getCartQuery,
     variables: { cartId },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   if (!res.body.data.cart) {
@@ -322,7 +322,7 @@ export async function getCollection(
     variables: {
       handle,
     },
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   return reshapeCollection(res.body.data.collection);
@@ -344,11 +344,11 @@ export async function getCollectionProducts({
       sortKey,
       reverse,
     },
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   if (!res.body.data.collection) {
-    console.log('No collection found for handle', handle);
+    console.log("No collection found for handle", handle);
     return [];
   }
 
@@ -360,25 +360,25 @@ export async function getCollectionProducts({
 export async function getCollections(): Promise<Collection[]> {
   const res = await shopifyFetch<ShopifyCollectionsOperation>({
     query: getCollectionsQuery,
-    cache: 'force-cache',
+    cache: "force-cache",
   });
   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
   const collections = [
     {
-      handle: '',
-      title: 'All',
-      description: 'All products',
+      handle: "",
+      title: "All",
+      description: "All products",
       seo: {
-        title: 'All',
-        description: 'All products',
+        title: "All",
+        description: "All products",
       },
-      path: '/search',
+      path: "/search",
       updatedAt: new Date().toISOString(),
     },
     // Filter out the `hidden` collections.
     // Collections that start with `hidden-*` need to be hidden on the search page.
     ...reshapeCollections(shopifyCollections).filter(
-      (collection) => !collection.handle.startsWith('hidden')
+      (collection) => !collection.handle.startsWith("hidden")
     ),
   ];
 
@@ -388,7 +388,7 @@ export async function getCollections(): Promise<Collection[]> {
 export async function getMenu(handle: string): Promise<Menu[]> {
   const res = await shopifyFetch<ShopifyMenuOperation>({
     query: getMenuQuery,
-    cache: 'force-cache',
+    cache: "force-cache",
     variables: {
       handle,
     },
@@ -398,9 +398,9 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
       title: item.title,
       path: item.url
-        .replace(domain, '')
-        .replace('/collections', '/search')
-        .replace('/pages', ''),
+        .replace(domain, "")
+        .replace("/collections", "/search")
+        .replace("/pages", ""),
     })) || []
   );
 }
@@ -409,7 +409,7 @@ export async function getPage(handle: string): Promise<Page> {
   const res = await shopifyFetch<ShopifyPageOperation>({
     query: getPageQuery,
     variables: { handle },
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   return res.body.data.pageByHandle;
@@ -418,7 +418,7 @@ export async function getPage(handle: string): Promise<Page> {
 export async function getPages(): Promise<Page[]> {
   const res = await shopifyFetch<ShopifyPagesOperation>({
     query: getPagesQuery,
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   return removeEdgesAndNodes(res.body.data.pages);
@@ -430,7 +430,7 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
     variables: {
       handle,
     },
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   return reshapeProduct(res.body.data.product, false);
@@ -444,7 +444,7 @@ export async function getProductRecommendations(
     variables: {
       productId,
     },
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   return reshapeProducts(res.body.data.productRecommendations);
@@ -466,7 +466,7 @@ export async function getProducts({
       reverse,
       sortKey,
     },
-    cache: 'force-cache',
+    cache: "force-cache",
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
@@ -480,7 +480,7 @@ export async function createCustomer(
     variables: {
       input,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
   const gqlResponse = res.body.data.customerCreate;
 
@@ -498,7 +498,7 @@ export async function createAccessToken(
     variables: {
       input,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
   const gqlResponse = res.body.data.customerAccessTokenCreate;
 
@@ -516,7 +516,7 @@ export async function renewAccessToken(
     variables: {
       customerAccessToken,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   return res.body.data.customerAccessTokenRenew.customerAccessToken;
@@ -530,7 +530,7 @@ export async function deleteAccessToken(
     variables: {
       customerAccessToken,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   return res.body.data.customerAccessTokenDelete.deletedAccessToken;
@@ -544,7 +544,7 @@ export async function getCustomer(
     variables: {
       customerAccessToken,
     },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   if (!res.body.data.customer) {
@@ -564,7 +564,7 @@ export async function updateBuyerIdentity({
   const res = await shopifyFetch<ShopifyUpdateBuyerIdentityOperation>({
     query: updateBuyerIdentityMutation,
     variables: { cartId, buyerIdentity },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   if (!res.body.data.cart) {
@@ -578,7 +578,7 @@ export async function customerRecover(email: string): Promise<Boolean> {
   const res = await shopifyFetch<ShopifCustomerRecoverOperation>({
     query: customerRecoverMutation,
     variables: { email },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   const gqlResponse = res.body.data.customerRecover;
@@ -601,7 +601,7 @@ export async function customerUpdate({
   const res = await shopifyFetch<ShopifyCustomerUpdateOperation>({
     query: customerUpdateMutation,
     variables: { customer, customerAccessToken },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   const gqlResponse = res.body.data.customerUpdate;
@@ -624,7 +624,7 @@ export async function customerAddressCreate({
   const res = await shopifyFetch<ShopifyCustomerAddressCreateOperation>({
     query: customerAddressCreateMutation,
     variables: { customerAccessToken, address },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   const gqlResponse = res.body.data.customerAddressCreate;
@@ -649,7 +649,7 @@ export async function customerAddressUpdate({
   const res = await shopifyFetch<ShopifyCustomerAddressUpdateOperation>({
     query: customerAddressUpdateMutation,
     variables: { customerAccessToken, address, id },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   const gqlResponse = res.body.data.customerAddressUpdate;
@@ -672,7 +672,7 @@ export async function customerDefaultAddressUpdate({
   const res = await shopifyFetch<ShopifyCustomerDefaultAddressUpdateOperation>({
     query: customerDefaultAddressUpdateMutation,
     variables: { customerAccessToken, addressId },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   const gqlResponse = res.body.data.customerDefaultAddressUpdate;
@@ -695,7 +695,7 @@ export async function customerAddressDelete({
   const res = await shopifyFetch<ShopifyCustomerAddressDeleteOperation>({
     query: customerAddressDeleteMutation,
     variables: { customerAccessToken, id },
-    cache: 'no-store',
+    cache: "no-store",
   });
 
   const gqlResponse = res.body.data.customerAddressDelete;

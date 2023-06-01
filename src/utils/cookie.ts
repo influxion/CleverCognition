@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 export function getCookie(name: string) {
   const cookie = cookies().get(name);
@@ -12,9 +12,9 @@ export function deleteCookie(name: string) {
 
 export function setCookie(name: string, value: string) {
   return cookies().set(name, value, {
-    path: '/',
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
+    path: "/",
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
     httpOnly: true,
   });
 }

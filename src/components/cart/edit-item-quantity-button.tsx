@@ -1,73 +1,54 @@
-import { useRouter } from 'next/navigation';
-import { startTransition, useState } from 'react';
+import { useRouter } from "next/navigation";
+import { startTransition, useState } from "react";
 
-import clsx from 'clsx';
-import MinusIcon from '@/components/icons/minus';
-import PlusIcon from '@/components/icons/plus';
-import type { CartItem } from '@/lib/shopify/types/cart';
-import LoadingDots from '../loading-dots';
+import clsx from "clsx";
+import MinusIcon from "@/components/icons/minus";
+import PlusIcon from "@/components/icons/plus";
+import type { Cart, CartItem } from "@/lib/shopify/types/cart";
+import SubmitButton from "../global/submit-button";
+import { updateItem } from "./action";
 
 export default function EditItemQuantityButton({
   item,
   type,
+  cart,
 }: {
   item: CartItem;
-  type: 'plus' | 'minus';
+  type: "plus" | "minus";
+  cart: Cart;
 }) {
   const router = useRouter();
-  const [editing, setEditing] = useState(false);
 
-  async function handleEdit() {
-    setEditing(true);
-
-    const response = await fetch(
-      `/api/cart${
-        type === 'minus' && item.quantity - 1 === 0 ? '/delete' : ''
-      }`,
-      {
-        method: type === 'minus' && item.quantity - 1 === 0 ? 'POST' : 'PUT',
-        body: JSON.stringify({
-          lineId: item.id,
-          variantId: item.merchandise.id,
-          quantity: type === 'plus' ? item.quantity + 1 : item.quantity - 1,
-        }),
-      }
-    );
-    const data = await response.json();
-
-    if (data.error) {
-      alert(data.error);
-      return;
-    }
-
-    setEditing(false);
-
-    startTransition(() => {
-      router.refresh();
-    });
-  }
   return (
-    <button
-      aria-label={
-        type === 'plus' ? 'Increase item quantity' : 'Reduce item quantity'
-      }
-      onClick={handleEdit}
-      disabled={editing}
-      className={clsx(
-        'ease flex min-w-[36px] max-w-[36px] items-center justify-center border px-2 transition-all duration-200 hover:border-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-900',
-        {
-          'cursor-not-allowed': editing,
-          'ml-auto': type === 'minus',
-        }
-      )}
+    <form
+      action={async () => {
+        await updateItem(
+          item.id,
+          item.merchandise.id,
+          cart.id,
+          type === "plus" ? item.quantity + 1 : item.quantity - 1
+        );
+        router.refresh();
+      }}
     >
-      {editing ? (
-        <LoadingDots className="bg-black dark:bg-white" />
-      ) : type === 'plus' ? (
-        <PlusIcon className="h-4 w-4" />
-      ) : (
-        <MinusIcon className="h-4 w-4" />
-      )}
-    </button>
+      <SubmitButton
+        aria-label={
+          type === "plus" ? "Increase item quantity" : "Reduce item quantity"
+        }
+        hideChild
+        className={clsx(
+          "ease flex min-w-[36px] max-w-[36px] items-center justify-center border px-2 transition-all duration-200 hover:border-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-900",
+          {
+            "ml-auto": type === "minus",
+          }
+        )}
+      >
+        {type === "plus" ? (
+          <PlusIcon className="h-4 w-4" />
+        ) : (
+          <MinusIcon className="h-4 w-4" />
+        )}
+      </SubmitButton>
+    </form>
   );
 }

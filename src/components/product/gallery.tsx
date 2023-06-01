@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import clsx from "clsx";
-import { GridTileImage } from "@/components/grid/tile";
-import ArrowLeftIcon from "@/components/icons/arrow-left";
+import clsx from 'clsx';
+import { GridTileImage } from '@/components/grid/tile';
+import ArrowLeftIcon from '@/components/icons/arrow-left';
 
 export function Gallery({
   title,
@@ -19,8 +19,8 @@ export function Gallery({
 }) {
   const [currentImage, setCurrentImage] = useState(0);
 
-  function handleNavigate(direction: "next" | "previous") {
-    if (direction === "next") {
+  function handleNavigate(direction: 'next' | 'previous') {
+    if (direction === 'next') {
       setCurrentImage(currentImage + 1 < images.length ? currentImage + 1 : 0);
     } else {
       setCurrentImage(
@@ -30,7 +30,7 @@ export function Gallery({
   }
 
   const buttonClassName =
-    "px-9 cursor-pointer ease-in-and-out duration-200 transition-bg bg-[#7928ca] hover:bg-violetDark";
+    'px-9 cursor-pointer ease-in-and-out duration-200 transition-bg bg-[#7928ca] hover:bg-violetDark';
 
   return (
     <div className="h-full">
@@ -58,16 +58,16 @@ export function Gallery({
               aria-label="Previous product image"
               className={clsx(
                 buttonClassName,
-                "border-r border-white dark:border-black"
+                'border-r border-white dark:border-black'
               )}
-              onClick={() => handleNavigate("previous")}
+              onClick={() => handleNavigate('previous')}
             >
               <ArrowLeftIcon className="h-6" />
             </button>
             <button
               aria-label="Next product image"
               className={clsx(buttonClassName)}
-              onClick={() => handleNavigate("next")}
+              onClick={() => handleNavigate('next')}
             >
               <ArrowLeftIcon className="h-6 rotate-180" />
             </button>

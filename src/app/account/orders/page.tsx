@@ -1,5 +1,5 @@
-import { getCustomerWithRevalidate } from "@/app/action";
-import BackButton from "../../../components/global/back-button";
+import { getCustomerWithRevalidate } from '@/app/action';
+import BackButton from '../../../components/global/back-button';
 
 export default async function AccountOrdersPage() {
   const customer = await getCustomerWithRevalidate();
@@ -17,12 +17,12 @@ export default async function AccountOrdersPage() {
                 <h3 className="text-xl font-bold">Order: {order.name}</h3>
 
                 <p>
-                  {new Date(order.processedAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
+                  {new Date(order.processedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
                   })}
                 </p>
                 <p>${(+order.totalPrice.amount).toFixed(2)}</p>

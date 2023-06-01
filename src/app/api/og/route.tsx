@@ -1,9 +1,9 @@
-import { ImageResponse } from "@vercel/og";
-import { NextRequest } from "next/server";
+import { ImageResponse } from '@vercel/og';
+import { NextRequest } from 'next/server';
 const interRegular = fetch(
-  new URL("./Inter-Regular.ttf", import.meta.url)
+  new URL('./Inter-Regular.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer());
-const interBold = fetch(new URL("./Inter-Bold.ttf", import.meta.url)).then(
+const interBold = fetch(new URL('./Inter-Bold.ttf', import.meta.url)).then(
   (res) => res.arrayBuffer()
 );
 export async function GET(req: NextRequest): Promise<Response | ImageResponse> {
@@ -13,8 +13,8 @@ export async function GET(req: NextRequest): Promise<Response | ImageResponse> {
       interBold,
     ]);
     const { searchParams } = new URL(req.url);
-    const title = searchParams.has("title")
-      ? searchParams.get("title")?.slice(0, 100)
+    const title = searchParams.has('title')
+      ? searchParams.get('title')?.slice(0, 100)
       : process.env.SITE_NAME;
     return new ImageResponse(
       (
@@ -37,15 +37,15 @@ export async function GET(req: NextRequest): Promise<Response | ImageResponse> {
         height: 630,
         fonts: [
           {
-            name: "Inter",
+            name: 'Inter',
             data: regularFont,
-            style: "normal",
+            style: 'normal',
             weight: 400,
           },
           {
-            name: "Inter",
+            name: 'Inter',
             data: boldFont,
-            style: "normal",
+            style: 'normal',
             weight: 700,
           },
         ],

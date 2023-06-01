@@ -247,7 +247,7 @@ export enum CountryCode {
   ZA = 'ZA',
   ZM = 'ZM',
   ZW = 'ZW',
-  ZZ = 'ZZ'
+  ZZ = 'ZZ',
 }
 
 // enum CustomerErrorCode {

@@ -1,9 +1,9 @@
-"use client";
-import { updateAccount } from "@/app/account/action";
-import { Input } from "@/components/ui/input";
-import SubmitButton from "@/components/global/submit-button";
-import { Customer } from "@/lib/shopify/types/customer";
-import { Form, useFormStatus } from "@/components/global/form";
+'use client';
+import { updateAccount } from '@/app/account/action';
+import { Input } from '@/components/ui/input';
+import SubmitButton from '@/components/global/submit-button';
+import { Customer } from '@/lib/shopify/types/customer';
+import { Form, useFormStatus } from '@/components/global/form';
 
 export default function AccountUpdateForm({
   customer,

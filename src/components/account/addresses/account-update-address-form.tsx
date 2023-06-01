@@ -1,8 +1,8 @@
-"use client";
-import { updateAddress } from "@/app/account/addresses/[addressNumber]/action";
-import { Form, useFormStatus } from "@/components/global/form";
-import SubmitButton from "@/components/global/submit-button";
-import { Input } from "@/components/ui/input";
+'use client';
+import { updateAddress } from '@/app/account/addresses/[addressNumber]/action';
+import { Form, useFormStatus } from '@/components/global/form';
+import SubmitButton from '@/components/global/submit-button';
+import { Input } from '@/components/ui/input';
 
 export default function AccountUpdateAddressForm({
   address,

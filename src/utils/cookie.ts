@@ -15,6 +15,6 @@ export function setCookie(name: string, value: string) {
     path: '/',
     sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
-    httpOnly: true
+    httpOnly: true,
   });
 }

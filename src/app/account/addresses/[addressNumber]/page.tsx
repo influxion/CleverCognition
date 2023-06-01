@@ -1,19 +1,19 @@
-import { getCustomerWithRevalidate } from "@/app/action";
-import { redirect } from "next/navigation";
-import BackButton from "@/components/global/back-button";
-import { deleteAddress, updateAddress } from "./action";
-import SubmitButton from "@/components/global/submit-button";
-import { Input } from "@/components/ui/input";
-import { Home, Trash2 } from "lucide-react";
+import { getCustomerWithRevalidate } from '@/app/action';
+import { redirect } from 'next/navigation';
+import BackButton from '@/components/global/back-button';
+import { deleteAddress, updateAddress } from './action';
+import SubmitButton from '@/components/global/submit-button';
+import { Input } from '@/components/ui/input';
+import { Home, Trash2 } from 'lucide-react';
 import {
   Tooltip,
   TooltipProvider,
   TooltipTrigger,
   TooltipContent,
-} from "@/components/ui/tooltip";
-import { DefaultAddressButton } from "@/components/account/addresses/default-button";
-import { Suspense } from "react";
-import AccountUpdateAddressForm from "@/components/account/addresses/account-update-address-form";
+} from '@/components/ui/tooltip';
+import { DefaultAddressButton } from '@/components/account/addresses/default-button';
+import { Suspense } from 'react';
+import AccountUpdateAddressForm from '@/components/account/addresses/account-update-address-form';
 
 export default async function EditAddressPage({
   params: { addressNumber },
@@ -24,7 +24,7 @@ export default async function EditAddressPage({
 
   const address = customer.addresses[+addressNumber];
 
-  if (!address) return redirect("/account/addresses");
+  if (!address) return redirect('/account/addresses');
 
   return (
     <div className="m-auto flex min-h-[70vh] max-w-5xl flex-col justify-center px-4 py-16">

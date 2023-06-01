@@ -1,19 +1,19 @@
-"use server";
+'use server';
 
 import {
   deleteAccessToken,
   getCustomer,
   renewAccessToken,
   updateBuyerIdentity,
-} from "@/lib/shopify";
-import { Customer } from "@/lib/shopify/types/customer";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { deleteCookie, getCookie, setCookie } from "@/utils/cookie";
+} from '@/lib/shopify';
+import { Customer } from '@/lib/shopify/types/customer';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { deleteCookie, getCookie, setCookie } from '@/utils/cookie';
 
 export async function getAccessToken() {
-  let accessToken = getCookie("accessToken");
-  const expiresAt = getCookie("expiresAt");
+  let accessToken = getCookie('accessToken');
+  const expiresAt = getCookie('expiresAt');
 
   if (!accessToken || !expiresAt) return;
 
@@ -35,13 +35,13 @@ export async function getCustomerWithRevalidate({
     accessToken = await getAccessToken();
   }
 
-  if (!accessToken) redirect("/account/sign-in");
+  if (!accessToken) redirect('/account/sign-in');
 
   const customer = await getCustomer(accessToken);
 
   if (!customer) {
     await unlinkCustomerFromCart();
-    redirect("/account/sign-in");
+    redirect('/account/sign-in');
   }
 
   if (path) {
@@ -71,23 +71,23 @@ export async function getAuthedStatus() {
 
 export async function signOut() {
   const accessToken = await getAccessToken();
-  deleteCookie("accessToken");
-  deleteCookie("expiresAt");
+  deleteCookie('accessToken');
+  deleteCookie('expiresAt');
   try {
-    await deleteAccessToken(accessToken || "");
+    await deleteAccessToken(accessToken || '');
     await unlinkCustomerFromCart();
   } catch (e) {
     console.log(e);
   }
-  redirect("/account/sign-in");
+  redirect('/account/sign-in');
 }
 
 export async function linkCustomerToCart(
   customer: Customer,
-  cartId: string = ""
+  cartId: string = ''
 ) {
   if (!cartId) {
-    cartId = getCookie("cartId")!;
+    cartId = getCookie('cartId')!;
   }
   if (!cartId) return;
   const accessToken = await getAccessToken();
@@ -103,7 +103,7 @@ export async function linkCustomerToCart(
 }
 
 export async function unlinkCustomerFromCart() {
-  let cartId = getCookie("cartId")!;
+  let cartId = getCookie('cartId')!;
 
   if (!cartId) return;
   await updateBuyerIdentity({
@@ -119,7 +119,7 @@ export async function unlinkCustomerFromCart() {
             address2: undefined,
             city: undefined,
             company: undefined,
-            country: "CA",
+            country: 'CA',
             firstName: undefined,
             lastName: undefined,
             phone: undefined,
@@ -140,10 +140,12 @@ export async function refreshToken(customerAccessToken: string) {
       customerAccessToken
     );
 
-    setCookie("accessToken", accessToken);
-    setCookie("expiresAt", expiresAt.toString());
+    if (!accessToken || !expiresAt) redirect('/account/sign-in');
 
-    revalidatePath("/account");
+    setCookie('accessToken', accessToken);
+    setCookie('expiresAt', expiresAt.toString());
+
+    revalidatePath('/account');
     return accessToken;
   } catch (e) {
     console.log(e);

@@ -1,7 +1,7 @@
-import Collections from "@/components/layout/search/collections";
-import FilterList from "@/components/layout/search/filter";
-import { sorting } from "@/lib/constants";
-import { Suspense } from "react";
+import Collections from '@/components/layout/search/collections';
+import FilterList from '@/components/layout/search/filter';
+import { sorting } from '@/lib/constants';
+import { Suspense } from 'react';
 
 export default function SearchLayout({
   children,

@@ -1,8 +1,8 @@
-"use client";
-import { createAddress } from "@/app/account/addresses/add/action";
-import { Form, useFormStatus } from "@/components/global/form";
-import SubmitButton from "@/components/global/submit-button";
-import { Input } from "@/components/ui/input";
+'use client';
+import { createAddress } from '@/app/account/addresses/add/action';
+import { Form, useFormStatus } from '@/components/global/form';
+import SubmitButton from '@/components/global/submit-button';
+import { Input } from '@/components/ui/input';
 
 export default function AccountAddAddressForm() {
   const { data, error, setter } = useFormStatus();

@@ -63,8 +63,14 @@ export const customerRecoverMutation = /* GraphQL */ `
 `;
 
 export const customerUpdateMutation = /* GraphQL */ `
-  mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: String!) {
-    customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
+  mutation customerUpdate(
+    $customer: CustomerUpdateInput!
+    $customerAccessToken: String!
+  ) {
+    customerUpdate(
+      customer: $customer
+      customerAccessToken: $customerAccessToken
+    ) {
       customerUserErrors {
         field
         message
@@ -74,8 +80,14 @@ export const customerUpdateMutation = /* GraphQL */ `
 `;
 
 export const customerAddressCreateMutation = /* GraphQL */ `
-  mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessToken: String!) {
-    customerAddressCreate(address: $address, customerAccessToken: $customerAccessToken) {
+  mutation customerAddressCreate(
+    $address: MailingAddressInput!
+    $customerAccessToken: String!
+  ) {
+    customerAddressCreate(
+      address: $address
+      customerAccessToken: $customerAccessToken
+    ) {
       customerAddress {
         id
       }
@@ -93,7 +105,11 @@ export const customerAddressUpdateMutation = /* GraphQL */ `
     $customerAccessToken: String!
     $id: ID!
   ) {
-    customerAddressUpdate(address: $address, customerAccessToken: $customerAccessToken, id: $id) {
+    customerAddressUpdate(
+      address: $address
+      customerAccessToken: $customerAccessToken
+      id: $id
+    ) {
       customerAddress {
         id
       }
@@ -106,8 +122,14 @@ export const customerAddressUpdateMutation = /* GraphQL */ `
 `;
 
 export const customerDefaultAddressUpdateMutation = /* GraphQL */ `
-  mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!) {
-    customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
+  mutation customerDefaultAddressUpdate(
+    $addressId: ID!
+    $customerAccessToken: String!
+  ) {
+    customerDefaultAddressUpdate(
+      addressId: $addressId
+      customerAccessToken: $customerAccessToken
+    ) {
       customer {
         id
       }

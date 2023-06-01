@@ -1,8 +1,8 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import { signUp } from "../../../app/account/sign-up/action";
-import SubmitButton from "@/components/global/submit-button";
-import { Form, useFormStatus } from "@/components/global/form";
+'use client';
+import { Input } from '@/components/ui/input';
+import { signUp } from '../../../app/account/sign-up/action';
+import SubmitButton from '@/components/global/submit-button';
+import { Form, useFormStatus } from '@/components/global/form';
 
 export default async function SignUpForm() {
   const { data, error, setter } = useFormStatus();

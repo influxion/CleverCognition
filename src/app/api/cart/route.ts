@@ -1,17 +1,17 @@
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { addToCart, updateCart } from "@/lib/shopify";
-import { isShopifyError } from "@/lib/type-guards";
-import { formatErrorMessage } from "@/utils/format-error-message";
+import { addToCart, updateCart } from '@/lib/shopify';
+import { isShopifyError } from '@/lib/type-guards';
+import { formatErrorMessage } from '@/utils/format-error-message';
 
 export async function POST(req: NextRequest): Promise<Response> {
-  const cartId = cookies().get("cartId")?.value;
+  const cartId = cookies().get('cartId')?.value;
   const { merchandiseId } = await req.json();
 
   if (!cartId?.length || !merchandiseId?.length) {
     return NextResponse.json(
-      { error: "Missing cartId or variantId" },
+      { error: 'Missing cartId or variantId' },
       { status: 400 }
     );
   }
@@ -31,12 +31,12 @@ export async function POST(req: NextRequest): Promise<Response> {
 }
 
 export async function PUT(req: NextRequest): Promise<Response> {
-  const cartId = cookies().get("cartId")?.value;
+  const cartId = cookies().get('cartId')?.value;
   const { variantId, quantity, lineId } = await req.json();
 
   if (!cartId || !variantId || !quantity || !lineId) {
     return NextResponse.json(
-      { error: "Missing cartId, variantId, lineId, or quantity" },
+      { error: 'Missing cartId, variantId, lineId, or quantity' },
       { status: 400 }
     );
   }

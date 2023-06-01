@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useEffect, experimental_useOptimistic as useOptimistic } from "react";
+import { useEffect, experimental_useOptimistic as useOptimistic } from 'react';
 import {
   TooltipProvider,
   TooltipTrigger,
   Tooltip,
   TooltipContent,
-} from "@/components/ui/tooltip";
-import SubmitButton from "@/components/global/submit-button";
-import { Home } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Customer } from "@/lib/shopify/types/customer";
-import { updateDefaultAddress } from "@/app/account/addresses/[addressNumber]/action";
+} from '@/components/ui/tooltip';
+import SubmitButton from '@/components/global/submit-button';
+import { Home } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Customer } from '@/lib/shopify/types/customer';
+import { updateDefaultAddress } from '@/app/account/addresses/[addressNumber]/action';
 
 export function DefaultAddressButton({
   address,

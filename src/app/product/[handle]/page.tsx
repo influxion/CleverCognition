@@ -1,18 +1,18 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
-import Grid from "@/components/grid";
-import ProductGridItems from "@/components/layout/product-grid-items";
-import { AddToCart } from "@/components/product/add-to-cart";
-import { Gallery } from "@/components/product/gallery";
-import { VariantSelector } from "@/components/product/variant-selector";
-import Prose from "@/components/prose";
-import { HIDDEN_PRODUCT_TAG } from "@/lib/constants";
-import { getProduct, getProductRecommendations } from "@/lib/shopify";
-import { Image } from "@/lib/shopify/types/product";
+import Grid from '@/components/grid';
+import ProductGridItems from '@/components/layout/product-grid-items';
+import { AddToCart } from '@/components/product/add-to-cart';
+import { Gallery } from '@/components/product/gallery';
+import { VariantSelector } from '@/components/product/variant-selector';
+import Prose from '@/components/prose';
+import { HIDDEN_PRODUCT_TAG } from '@/lib/constants';
+import { getProduct, getProductRecommendations } from '@/lib/shopify';
+import { Image } from '@/lib/shopify/types/product';
 
-export const runtime = "edge";
+export const runtime = 'edge';
 
 export async function generateMetadata({
   params,

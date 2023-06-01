@@ -1,12 +1,12 @@
-import { Carousel } from "@/components/carousel";
-import { ThreeItemGrid } from "@/components/grid/three-items";
-import { Suspense } from "react";
+import { Carousel } from '@/components/carousel';
+import { ThreeItemGrid } from '@/components/grid/three-items';
+import { Suspense } from 'react';
 
-export const runtime = "edge";
+export const runtime = 'edge';
 
 export const metadata = {
   description:
-    "High-performance ecommerce store built with Next.js, Vercel, and Shopify.",
+    'High-performance ecommerce store built with Next.js, Vercel, and Shopify.',
   // openGraph: {
   //   images: [
   //     {

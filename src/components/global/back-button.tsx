@@ -1,9 +1,9 @@
-"use client";
-import CaretLeftIcon from "@/components/icons/caret-left";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { redirectAction } from "@/app/action";
-import { useTransition } from "react";
+'use client';
+import CaretLeftIcon from '@/components/icons/caret-left';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { redirectAction } from '@/app/action';
+import { useTransition } from 'react';
 
 export default function BackButton({
   href,

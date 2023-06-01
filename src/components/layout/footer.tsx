@@ -1,15 +1,15 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import GitHubIcon from "@/components/icons/github";
-import LogoIcon from "@/components/icons/logo";
-import { getMenu } from "@/lib/shopify";
-import { Menu } from "@/lib/shopify/types/menu";
+import GitHubIcon from '@/components/icons/github';
+import LogoIcon from '@/components/icons/logo';
+import { getMenu } from '@/lib/shopify';
+import { Menu } from '@/lib/shopify/types/menu';
 
 const { SITE_NAME } = process.env;
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
-  const menu = await getMenu("next-js-frontend-footer-menu");
+  const menu = await getMenu('next-js-frontend-footer-menu');
 
   return (
     <footer className="flex grow flex-col justify-end bg-white text-black dark:bg-black dark:text-white">

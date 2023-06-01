@@ -1,9 +1,9 @@
-import { getCustomerWithRevalidate } from "@/app/action";
-import BackButton from "@/components/global/back-button";
-import RevalidateLink from "@/components/global/revalidate-link";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { Suspense } from "react";
+import { getCustomerWithRevalidate } from '@/app/action';
+import BackButton from '@/components/global/back-button';
+import RevalidateLink from '@/components/global/revalidate-link';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 export default async function AccountAddressesPage() {
   const customer = await getCustomerWithRevalidate();

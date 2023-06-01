@@ -10,7 +10,7 @@ const Price = ({
     {`${new Intl.NumberFormat(undefined, {
       style: 'currency',
       currency: currencyCode,
-      currencyDisplay: 'narrowSymbol'
+      currencyDisplay: 'narrowSymbol',
     }).format(parseFloat(amount))} ${currencyCode}`}
   </p>
 );

@@ -1,9 +1,9 @@
-"use client";
-import { redirectAction } from "@/app/action";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
-import { useTransition } from "react";
+'use client';
+import { redirectAction } from '@/app/action';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { redirect } from 'next/navigation';
+import { useTransition } from 'react';
 
 export default function RevalidateLink({
   href,
@@ -17,7 +17,7 @@ export default function RevalidateLink({
   let [isPending, startTransition] = useTransition();
   return (
     <button
-      className={cn(className, "w-full text-left")}
+      className={cn(className, 'w-full text-left')}
       onClick={() => startTransition(() => redirectAction(href))}
     >
       {children}

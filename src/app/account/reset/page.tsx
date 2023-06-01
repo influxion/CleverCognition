@@ -1,6 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { resetPassword } from "./action";
-import SubmitButton from "@/components/global/submit-button";
+import { Input } from '@/components/ui/input';
+import { resetPassword } from './action';
+import SubmitButton from '@/components/global/submit-button';
 
 export default async function AccountResetPage() {
   return (

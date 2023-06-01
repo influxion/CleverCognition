@@ -3,7 +3,7 @@ import ShoppingBagIcon from './shopping-bag';
 
 export default function CartIcon({
   className,
-  quantity
+  quantity,
 }: {
   className?: string;
   quantity?: number;

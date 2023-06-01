@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import Image from "next/image";
+import clsx from 'clsx';
+import Image from 'next/image';
 
-import Price from "@/components/price";
+import Price from '@/components/price';
 
 export function GridTileImage({
   isInteractive = true,
@@ -12,14 +12,14 @@ export function GridTileImage({
 }: {
   isInteractive?: boolean;
   background?:
-    | "white"
-    | "pink"
-    | "purple"
-    | "black"
-    | "purple-dark"
-    | "blue"
-    | "cyan"
-    | "gray";
+    | 'white'
+    | 'pink'
+    | 'purple'
+    | 'black'
+    | 'purple-dark'
+    | 'blue'
+    | 'cyan'
+    | 'gray';
   active?: boolean;
   labels?: {
     title: string;
@@ -31,17 +31,17 @@ export function GridTileImage({
   return (
     <div
       className={clsx(
-        "relative flex h-full w-full items-center justify-center overflow-hidden",
+        'relative flex h-full w-full items-center justify-center overflow-hidden',
         {
-          "bg-white dark:bg-white": background === "white",
-          "bg-[#ff0080] dark:bg-[#ff0080]": background === "pink",
-          "bg-[#7928ca] dark:bg-[#7928ca]": background === "purple",
-          "bg-gray-900 dark:bg-gray-900": background === "black",
-          "bg-violetDark dark:bg-violetDark": background === "purple-dark",
-          "bg-blue-500 dark:bg-blue-500": background === "blue",
-          "bg-cyan-500 dark:bg-cyan-500": background === "cyan",
-          "bg-gray-100 dark:bg-gray-100": background === "gray",
-          "bg-gray-100 dark:bg-gray-900": !background,
+          'bg-white dark:bg-white': background === 'white',
+          'bg-[#ff0080] dark:bg-[#ff0080]': background === 'pink',
+          'bg-[#7928ca] dark:bg-[#7928ca]': background === 'purple',
+          'bg-gray-900 dark:bg-gray-900': background === 'black',
+          'bg-violetDark dark:bg-violetDark': background === 'purple-dark',
+          'bg-blue-500 dark:bg-blue-500': background === 'blue',
+          'bg-cyan-500 dark:bg-cyan-500': background === 'cyan',
+          'bg-gray-100 dark:bg-gray-100': background === 'gray',
+          'bg-gray-100 dark:bg-gray-900': !background,
           relative: labels,
         }
       )}
@@ -51,12 +51,12 @@ export function GridTileImage({
       ) : null}
       {props.src ? (
         <Image
-          className={clsx("relative h-full w-full object-contain", {
-            "transition duration-300 ease-in-out hover:scale-105":
+          className={clsx('relative h-full w-full object-contain', {
+            'transition duration-300 ease-in-out hover:scale-105':
               isInteractive,
           })}
           {...props}
-          alt={props.title || ""}
+          alt={props.title || ''}
         />
       ) : null}
       {labels ? (
@@ -64,8 +64,8 @@ export function GridTileImage({
           <h3
             data-testid="product-name"
             className={clsx(
-              "inline bg-white box-decoration-clone py-3 pl-5 font-semibold leading-loose shadow-[1.25rem_0_0] shadow-white dark:bg-black dark:shadow-black",
-              !labels.isSmall ? "text-3xl" : "text-lg"
+              'inline bg-white box-decoration-clone py-3 pl-5 font-semibold leading-loose shadow-[1.25rem_0_0] shadow-white dark:bg-black dark:shadow-black',
+              !labels.isSmall ? 'text-3xl' : 'text-lg'
             )}
           >
             {labels.title}

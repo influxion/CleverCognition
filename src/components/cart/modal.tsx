@@ -1,16 +1,16 @@
-import { Dialog } from "@headlessui/react";
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
+import { Dialog } from '@headlessui/react';
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import CloseIcon from "@/components/icons/close";
-import ShoppingBagIcon from "@/components/icons/shopping-bag";
-import Price from "@/components/price";
-import { DEFAULT_OPTION } from "@/lib/constants";
-import type { Cart } from "@/lib/shopify/types/cart";
-import { createUrl } from "@/lib/utils";
-import DeleteItemButton from "./delete-item-button";
-import EditItemQuantityButton from "./edit-item-quantity-button";
+import CloseIcon from '@/components/icons/close';
+import ShoppingBagIcon from '@/components/icons/shopping-bag';
+import Price from '@/components/price';
+import { DEFAULT_OPTION } from '@/lib/constants';
+import type { Cart } from '@/lib/shopify/types/cart';
+import { createUrl } from '@/lib/utils';
+import DeleteItemButton from './delete-item-button';
+import EditItemQuantityButton from './edit-item-quantity-button';
 
 type MerchandiseSearchParams = {
   [key: string]: string;
@@ -41,8 +41,8 @@ export default function CartModal({
         >
           <motion.div
             variants={{
-              open: { opacity: 1, backdropFilter: "blur(0.5px)" },
-              closed: { opacity: 0, backdropFilter: "blur(0px)" },
+              open: { opacity: 1, backdropFilter: 'blur(0.5px)' },
+              closed: { opacity: 0, backdropFilter: 'blur(0px)' },
             }}
             className="fixed inset-0 bg-black/30"
             aria-hidden="true"
@@ -53,9 +53,9 @@ export default function CartModal({
               as={motion.div}
               variants={{
                 open: { translateX: 0 },
-                closed: { translateX: "100%" },
+                closed: { translateX: '100%' },
               }}
-              transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+              transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
               className="flex w-full flex-col bg-white p-8 text-black dark:bg-black dark:text-white md:w-3/5 lg:w-2/5"
             >
               <div className="flex items-center justify-between">

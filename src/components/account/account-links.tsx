@@ -1,6 +1,6 @@
-import RevalidateLink from "@/components/global/revalidate-link";
-import { Customer } from "@/lib/shopify/types/customer";
-import Link from "next/link";
+import RevalidateLink from '@/components/global/revalidate-link';
+import { Customer } from '@/lib/shopify/types/customer';
+import Link from 'next/link';
 
 export default function AccountLinks({
   customer,
@@ -29,7 +29,7 @@ export function AccountOrdersLink({ customer }: { customer: Customer }) {
       {customer.numberOfOrders ? (
         <p className="font-bold">
           You have {customer.numberOfOrders} order
-          {customer.numberOfOrders == 1 ? "" : "s"}.
+          {customer.numberOfOrders == 1 ? '' : 's'}.
         </p>
       ) : null}
     </RevalidateLink>
@@ -40,7 +40,7 @@ export function AccountOrdersLink({ customer }: { customer: Customer }) {
       {customer.numberOfOrders ? (
         <p className="font-bold">
           You have {customer.numberOfOrders} order
-          {customer.numberOfOrders == 1 ? "" : "s"}.
+          {customer.numberOfOrders == 1 ? '' : 's'}.
         </p>
       ) : null}
     </div>

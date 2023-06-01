@@ -1,7 +1,7 @@
-import { getCustomerWithRevalidate } from '@/app/action';
-import AccountDetails from '../../components/account/account-details';
-import AccountLinks from '@/components/account/account-links';
-import SignOutButton from '@/components/account/sign-out-button';
+import { getCustomerWithRevalidate } from "@/app/action";
+import AccountDetails from "../../components/account/account-details";
+import AccountLinks from "@/components/account/account-links";
+import SignOutButton from "@/components/account/sign-out-button";
 
 export default async function AccountPage() {
   const customer = await getCustomerWithRevalidate();

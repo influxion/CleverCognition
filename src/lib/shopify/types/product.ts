@@ -1,4 +1,4 @@
-import { Money, Connection, SEO } from './__global';
+import { Money, Connection, SEO } from "./__global";
 
 export type Image = {
   url: string;
@@ -7,7 +7,7 @@ export type Image = {
   height: number;
 };
 
-export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
+export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
   variants: ProductVariant[];
   images: Image[];
 };

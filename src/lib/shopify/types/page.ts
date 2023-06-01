@@ -1,4 +1,4 @@
-import { SEO, Connection } from './__global';
+import { SEO, Connection } from "./__global";
 
 export type Page = {
   id: string;

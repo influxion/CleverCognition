@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import SignUpForm from '../../../components/account/sign-up/sign-up-form';
+import SignUpForm from "../../../components/account/sign-up/sign-up-form";
 
 export default async function SignUpPage() {
   return (

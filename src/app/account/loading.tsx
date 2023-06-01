@@ -1,7 +1,7 @@
-import { getCookie } from '@/utils/cookie';
+import { getCookie } from "@/utils/cookie";
 
 export default function Loading() {
-  const accessToken = getCookie('accessToken');
+  const accessToken = getCookie("accessToken");
 
   if (!accessToken) {
     return (

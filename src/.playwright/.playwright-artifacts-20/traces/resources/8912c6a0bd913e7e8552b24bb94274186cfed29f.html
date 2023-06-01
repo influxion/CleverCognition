@@ -419,7 +419,7 @@
           b.parentNode.insertBefore(a.firstChild, b);
         b.parentNode.removeChild(b);
       };
-      $RS('S:2', 'P:2');
+      $RS("S:2", "P:2");
     </script>
     <script>
       $RC = function (b, c, e) {
@@ -428,7 +428,7 @@
         var a = document.getElementById(b);
         if (a) {
           b = a.previousSibling;
-          if (e) (b.data = '$!'), a.setAttribute('data-dgst', e);
+          if (e) (b.data = "$!"), a.setAttribute("data-dgst", e);
           else {
             e = b.parentNode;
             a = b.nextSibling;
@@ -436,22 +436,22 @@
             do {
               if (a && 8 === a.nodeType) {
                 var d = a.data;
-                if ('/$' === d)
+                if ("/$" === d)
                   if (0 === f) break;
                   else f--;
-                else ('$' !== d && '$?' !== d && '$!' !== d) || f++;
+                else ("$" !== d && "$?" !== d && "$!" !== d) || f++;
               }
               d = a.nextSibling;
               e.removeChild(a);
               a = d;
             } while (a);
             for (; c.firstChild; ) e.insertBefore(c.firstChild, a);
-            b.data = '$';
+            b.data = "$";
           }
           b._reactRetry && b._reactRetry();
         }
       };
-      $RC('B:1', 'S:1');
+      $RC("B:1", "S:1");
     </script>
     <div hidden id="S:4">
       <div class="relative w-full overflow-hidden bg-black dark:bg-white">
@@ -633,10 +633,10 @@
       </div>
     </div>
     <script>
-      $RS('S:4', 'P:4');
+      $RS("S:4", "P:4");
     </script>
     <script>
-      $RC('B:2', 'S:3');
+      $RC("B:2", "S:3");
     </script>
     <div hidden id="S:5">
       <footer
@@ -756,7 +756,7 @@
       </footer>
     </div>
     <script>
-      $RC('B:3', 'S:5');
+      $RC("B:3", "S:5");
     </script>
     <script>
       self.__next_f.push([
@@ -771,7 +771,7 @@
       ]);
     </script>
     <script>
-      self.__next_f.push([1, ']\n']);
+      self.__next_f.push([1, "]\n"]);
     </script>
     <div hidden id="S:0">
       <button
@@ -803,7 +803,7 @@
       </button>
     </div>
     <script>
-      $RC('B:0', 'S:0');
+      $RC("B:0", "S:0");
     </script>
   </body>
 </html>

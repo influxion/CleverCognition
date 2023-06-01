@@ -1,8 +1,8 @@
-'use client';
-import { Input } from '@/components/ui/input';
-import SubmitButton from '@/components/global/submit-button';
-import { Form, useFormStatus } from '@/components/global/form';
-import { updateAccountPassword } from '@/app/account/action';
+"use client";
+import { Input } from "@/components/ui/input";
+import SubmitButton from "@/components/global/submit-button";
+import { Form, useFormStatus } from "@/components/global/form";
+import { updateAccountPassword } from "@/app/account/action";
 
 export default function AccountPasswordForm() {
   const { data, error, setter } = useFormStatus();

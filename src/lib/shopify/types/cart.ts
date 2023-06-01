@@ -1,8 +1,8 @@
-import { Money, Connection } from './__global';
-import { ShopifyCustomer } from './customer';
-import { Product } from './product';
+import { Money, Connection } from "./__global";
+import { ShopifyCustomer } from "./customer";
+import { Product } from "./product";
 
-export type Cart = Omit<ShopifyCart, 'lines'> & {
+export type Cart = Omit<ShopifyCart, "lines"> & {
   lines: CartItem[];
 };
 

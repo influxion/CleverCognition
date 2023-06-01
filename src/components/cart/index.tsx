@@ -1,6 +1,6 @@
-'use server';
-import CartButton from './button';
-import { getCartWithCustomer } from './action';
+"use server";
+import CartButton from "./button";
+import { getCartWithCustomer } from "./action";
 
 export default async function Cart() {
   const { cart, cartIdUpdated } = await getCartWithCustomer();

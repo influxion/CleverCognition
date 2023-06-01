@@ -1,16 +1,16 @@
-import Link from 'next/link';
-import { Suspense } from 'react';
+import Link from "next/link";
+import { Suspense } from "react";
 
-import Cart from '@/components/cart';
-import CartIcon from '@/components/icons/cart';
-import LogoIcon from '@/components/icons/logo';
-import { getMenu } from '@/lib/shopify';
-import { Menu } from '@/lib/shopify/types/menu';
-import MobileMenu from './mobile-menu';
-import Search from './search';
+import Cart from "@/components/cart";
+import CartIcon from "@/components/icons/cart";
+import LogoIcon from "@/components/icons/logo";
+import { getMenu } from "@/lib/shopify";
+import { Menu } from "@/lib/shopify/types/menu";
+import MobileMenu from "./mobile-menu";
+import Search from "./search";
 
 export default async function Navbar() {
-  const menu = await getMenu('next-js-frontend-header-menu');
+  const menu = await getMenu("next-js-frontend-header-menu");
 
   return (
     <nav className="relative flex items-center justify-between gap-4 bg-white p-4 dark:bg-black lg:px-6">

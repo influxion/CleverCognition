@@ -1,11 +1,11 @@
-import { getCollectionProducts } from '@/lib/shopify';
-import Image from 'next/image';
-import Link from 'next/link';
+import { getCollectionProducts } from "@/lib/shopify";
+import Image from "next/image";
+import Link from "next/link";
 
 export async function Carousel() {
   // Collections that start with `hidden-*` are hidden from the search page.
   const products = await getCollectionProducts({
-    handle: 'hidden-homepage-carousel',
+    handle: "hidden-homepage-carousel",
   });
 
   if (!products?.length) return null;

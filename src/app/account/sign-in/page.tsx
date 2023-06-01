@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { getAuthedStatus } from '@/app/action';
-import { redirect } from 'next/navigation';
-import SignInForm from '../../../components/account/sign-in/sign-in-form';
+import Link from "next/link";
+import { getAuthedStatus } from "@/app/action";
+import { redirect } from "next/navigation";
+import SignInForm from "../../../components/account/sign-in/sign-in-form";
 
 export default async function SignInPage() {
   const authed = await getAuthedStatus();
-  if (authed) redirect('/account');
+  if (authed) redirect("/account");
 
   return (
     <>

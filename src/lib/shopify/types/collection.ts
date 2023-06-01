@@ -1,5 +1,5 @@
-import { ShopifyProduct } from './product';
-import { SEO, Connection } from './__global';
+import { ShopifyProduct } from "./product";
+import { SEO, Connection } from "./__global";
 
 export type Collection = ShopifyCollection & {
   path: string;

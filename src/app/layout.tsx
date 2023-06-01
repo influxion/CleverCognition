@@ -1,15 +1,15 @@
-import Navbar from '@/components/layout/navbar';
-import { Inter } from 'next/font/google';
-import { ReactNode, Suspense } from 'react';
-import './globals.css';
-import Footer from '@/components/layout/footer';
-import NotificationCenter from '@/components/notification-center';
+import Navbar from "@/components/layout/navbar";
+import { Inter } from "next/font/google";
+import { ReactNode, Suspense } from "react";
+import "./globals.css";
+import Footer from "@/components/layout/footer";
+import NotificationCenter from "@/components/notification-center";
 
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
 
 export const metadata = {
   title: {
-    default: SITE_NAME || '',
+    default: SITE_NAME || "",
     template: `%s | ${SITE_NAME}`,
   },
   robots: {
@@ -19,7 +19,7 @@ export const metadata = {
   ...(TWITTER_CREATOR &&
     TWITTER_SITE && {
       twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         creator: TWITTER_CREATOR,
         site: TWITTER_SITE,
       },
@@ -27,9 +27,9 @@ export const metadata = {
 };
 
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
 });
 
 export default async function RootLayout({

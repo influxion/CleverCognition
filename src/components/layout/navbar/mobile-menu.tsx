@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { Dialog } from '@headlessui/react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Dialog } from "@headlessui/react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import CloseIcon from '@/components/icons/close';
-import MenuIcon from '@/components/icons/menu';
-import { Menu } from '@/lib/shopify/types/menu';
-import Search from './search';
+import CloseIcon from "@/components/icons/close";
+import MenuIcon from "@/components/icons/menu";
+import { Menu } from "@/lib/shopify/types/menu";
+import Search from "./search";
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
   const pathname = usePathname();
@@ -22,8 +22,8 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
         setMobileMenuIsOpen(false);
       }
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [mobileMenuIsOpen]);
 
   useEffect(() => {

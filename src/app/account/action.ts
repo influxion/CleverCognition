@@ -1,25 +1,18 @@
-'use server';
-import { revalidate } from '@/app/[page]/page';
-import { getAccessToken } from '@/app/action';
-import {
-  customerUpdate,
-  deleteAccessToken,
-  updateBuyerIdentity,
-} from '@/lib/shopify';
-import { revalidatePath } from 'next/cache';
-import { getCookie, setCookie } from '@/utils/cookie';
+"use server";
+import { getAccessToken } from "@/app/action";
+import { customerUpdate } from "@/lib/shopify";
 
 export async function updateAccount(formData: FormData) {
   const accessToken = await getAccessToken();
   try {
     const ok = await customerUpdate({
       customer: {
-        firstName: formData.get('first-name') as string,
-        lastName: formData.get('last-name') as string,
-        email: formData.get('email') as string,
-        acceptsMarketing: !!formData.get('accepts-marketing'),
+        firstName: formData.get("first-name") as string,
+        lastName: formData.get("last-name") as string,
+        email: formData.get("email") as string,
+        acceptsMarketing: !!formData.get("accepts-marketing"),
       },
-      customerAccessToken: accessToken || '',
+      customerAccessToken: accessToken || "",
     });
 
     if (ok)
@@ -46,18 +39,18 @@ export async function updateAccountPassword(formData: FormData) {
   try {
     const ok = await customerUpdate({
       customer: {
-        password: formData.get('password')
-          ? (formData.get('password') as string)
+        password: formData.get("password")
+          ? (formData.get("password") as string)
           : undefined,
       },
-      customerAccessToken: accessToken || '',
+      customerAccessToken: accessToken || "",
     });
 
     if (ok)
       return {
         data: true,
         error: null,
-        revalidate: '/account/sign-in',
+        revalidate: "/account/sign-in",
       };
 
     return {

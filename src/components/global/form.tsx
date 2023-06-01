@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { redirectAction } from '@/app/action';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { redirectAction } from "@/app/action";
+import { Dispatch, SetStateAction, useState } from "react";
 type FormState = {
   data: any;
   error: any;

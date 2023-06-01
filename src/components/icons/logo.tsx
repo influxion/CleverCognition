@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import ShopLogo from '../../assets/logo-no-bg.png';
+import Image from "next/image";
+import ShopLogo from "../../assets/logo-no-bg.png";
 
 export default function LogoIcon({ className }: { className?: string }) {
   return (

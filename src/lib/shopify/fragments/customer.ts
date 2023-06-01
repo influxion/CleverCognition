@@ -1,5 +1,5 @@
-import addressFragment from './address';
-import orderFragment from './order';
+import addressFragment from "./address";
+import orderFragment from "./order";
 
 const customerFragment = /* GraphQL */ `
   fragment customer on Customer {

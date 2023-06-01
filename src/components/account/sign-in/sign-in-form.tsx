@@ -1,10 +1,10 @@
-'use client';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import { signIn } from '../../../app/account/sign-in/action';
-import SubmitButton from '@/components/global/submit-button';
-import { Form } from '@/components/global/form';
-import { useFormStatus } from '../../global/form';
+"use client";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { signIn } from "../../../app/account/sign-in/action";
+import SubmitButton from "@/components/global/submit-button";
+import { Form } from "@/components/global/form";
+import { useFormStatus } from "../../global/form";
 
 export default async function SignInForm() {
   const { data, error, setter } = useFormStatus();

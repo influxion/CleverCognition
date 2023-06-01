@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import { ProductOption, ProductVariant } from '@/lib/shopify/types/product';
-import { createUrl } from '@/lib/utils';
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import clsx from "clsx";
+import { ProductOption, ProductVariant } from "@/lib/shopify/types/product";
+import { createUrl } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ParamsMap = {
   [key: string]: string; // ie. { color: 'Red', size: 'Large', ... }
@@ -115,26 +115,26 @@ export function VariantSelector({
             )
           )?.availableForSale;
 
-          const DynamicTag = isAvailableForSale ? Link : 'p';
+          const DynamicTag = isAvailableForSale ? Link : "p";
 
           return (
             <DynamicTag
               key={value}
               href={optionUrl}
               title={`${option.name} ${value}${
-                !isAvailableForSale ? ' (Out of Stock)' : ''
+                !isAvailableForSale ? " (Out of Stock)" : ""
               }`}
               className={clsx(
-                'flex h-12 min-w-[48px] items-center justify-center rounded-full px-2 text-sm',
+                "flex h-12 min-w-[48px] items-center justify-center rounded-full px-2 text-sm",
                 {
-                  'cursor-default ring-2 ring-black dark:ring-white': isActive,
-                  'ring-1 ring-gray-300 transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-100 hover:ring-black dark:ring-gray-700 dark:hover:bg-transparent dark:hover:ring-white':
+                  "cursor-default ring-2 ring-black dark:ring-white": isActive,
+                  "ring-1 ring-gray-300 transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-100 hover:ring-black dark:ring-gray-700 dark:hover:bg-transparent dark:hover:ring-white":
                     !isActive && isAvailableForSale,
-                  'relative z-10 cursor-not-allowed overflow-hidden bg-gray-100 ring-1 ring-gray-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-gray-300 before:transition-transform dark:bg-gray-900 dark:ring-gray-700 before:dark:bg-gray-700':
+                  "relative z-10 cursor-not-allowed overflow-hidden bg-gray-100 ring-1 ring-gray-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-gray-300 before:transition-transform dark:bg-gray-900 dark:ring-gray-700 before:dark:bg-gray-700":
                     !isAvailableForSale,
                 }
               )}
-              data-testid={isActive ? 'selected-variant' : 'variant'}
+              data-testid={isActive ? "selected-variant" : "variant"}
             >
               {value}
             </DynamicTag>

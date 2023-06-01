@@ -1,14 +1,14 @@
-import Grid from '@/components/grid';
-import ProductGridItems from '@/components/layout/product-grid-items';
-import { defaultSort, sorting } from '@/lib/constants';
-import { getProducts } from '@/lib/shopify';
-import { Suspense } from 'react';
+import Grid from "@/components/grid";
+import ProductGridItems from "@/components/layout/product-grid-items";
+import { defaultSort, sorting } from "@/lib/constants";
+import { getProducts } from "@/lib/shopify";
+import { Suspense } from "react";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 export const metadata = {
-  title: 'Search',
-  description: 'Search for products in the store.',
+  title: "Search",
+  description: "Search for products in the store.",
 };
 
 export default async function SearchPage({
@@ -21,14 +21,14 @@ export default async function SearchPage({
     sorting.find((item) => item.slug === sort) || defaultSort;
 
   const products = await getProducts({ sortKey, reverse, query: searchValue });
-  const resultsText = products.length > 1 ? 'results' : 'result';
+  const resultsText = products.length > 1 ? "results" : "result";
 
   return (
     <Suspense>
       {searchValue ? (
         <p>
           {products.length === 0
-            ? 'There are no products that match '
+            ? "There are no products that match "
             : `Showing ${products.length} ${resultsText} for `}
           <span className="font-bold">&quot;{searchValue}&quot;</span>
         </p>

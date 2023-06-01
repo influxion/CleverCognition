@@ -1,9 +1,9 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+"use client";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 
-import SearchIcon from '@/components/icons/search';
-import { Input } from '@/components/ui/input';
+import SearchIcon from "@/components/icons/search";
+import { Input } from "@/components/ui/input";
 
 export default function Search() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function Search() {
       router.push(`/search`);
     }
     if (search) {
-      search.value = '';
+      search.value = "";
       search.blur();
     }
     setSearchBarOpen(false);
@@ -29,7 +29,7 @@ export default function Search() {
 
   function onClick() {
     if (searchBarOpen && inputRef?.current?.value) {
-      onSubmit(new Event('submit', { bubbles: true, cancelable: true }));
+      onSubmit(new Event("submit", { bubbles: true, cancelable: true }));
     } else {
       setSearchBarOpen(!searchBarOpen);
       if (!searchBarOpen && inputRef.current) {
@@ -55,7 +55,7 @@ export default function Search() {
           placeholder="Search for products..."
           autoComplete="off"
           className={`w-0 border-white pl-10 duration-200 placeholder:invisible dark:border-black md:pl-2 ${
-            searchBarOpen ? '!w-full !border-gray-500 placeholder:!visible' : ''
+            searchBarOpen ? "!w-full !border-gray-500 placeholder:!visible" : ""
           }`}
         />
         <button

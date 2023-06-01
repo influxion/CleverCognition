@@ -1,6 +1,6 @@
-import { getCustomerWithRevalidate } from '@/app/action';
-import BackButton from '@/components/global/back-button';
-import AccountAddAddressForm from '@/components/account/addresses/account-add-address-form';
+import { getCustomerWithRevalidate } from "@/app/action";
+import BackButton from "@/components/global/back-button";
+import AccountAddAddressForm from "@/components/account/addresses/account-add-address-form";
 
 export default async function AddAddressPage() {
   await getCustomerWithRevalidate();

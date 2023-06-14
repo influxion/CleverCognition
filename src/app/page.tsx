@@ -22,6 +22,7 @@ export const metadata = {
 export default async function HomePage() {
   return (
     <>
+      {/* Add System*/}
       {/* @ts-expect-error Server Component */}
       <ThreeItemGrid />
       <Suspense>
